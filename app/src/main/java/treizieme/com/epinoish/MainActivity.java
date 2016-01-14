@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // On start open login Activity
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, DrawerActivity.class);
         startActivity(intent);
 
         //SharedPreferences sharedPref = getSharedPreferences("user", Context.MODE_PRIVATE);
