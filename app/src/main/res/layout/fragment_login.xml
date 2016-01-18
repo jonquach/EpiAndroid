@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     tools:context="treizieme.com.epinoish.LoginFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <include layout="@layout/content_login"
         android:layout_gravity="center"
         android:layout_height="wrap_content"

@@ -1,12 +1,11 @@
 package treizieme.com.epinoish;
 
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                UserData u = UserData.getInstance();
+                Snackbar.make(view, "Your token is " + u.getToken(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        SharedPreferences sharedPref = getPreferences(0);
+        System.out.println("####### ------> TOKEN : " + sharedPref.getString("token", "failed"));
     }
 
     @Override
@@ -83,11 +87,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         LoginFragment frag = null;
 
-        if (id == R.id.nav_login_act) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.nav_login_frag) {
+        if (id == R.id.nav_login_frag) {
             frag = new LoginFragment();
         }
 
