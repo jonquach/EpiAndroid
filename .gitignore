@@ -20,6 +20,8 @@ build/
 # Ide
 .idea/workspace.xml
 .idea/libraries
+.idea/*
+.idea/
 
 # Local configuration file (sdk path, etc)
 local.properties
