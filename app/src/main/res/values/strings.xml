@@ -5,6 +5,7 @@
     <string name="input_hint_password">Password</string>
     <string name="login">Login</string>
     <string name="modules">Modules</string>
+    <string name="projects">Projects</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_drawer">DrawerActivity</string>
@@ -14,4 +15,7 @@
 
     <string name="module_semester">Semester: </string>
     <string name="module_grade">Grade: </string>
+
+    <string name="project_hyphen"> - </string>
+
 </resources>
