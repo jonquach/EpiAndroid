@@ -8,7 +8,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -32,6 +35,7 @@ public class ModuleFragment extends Fragment {
 
     private final OkHttpClient client = new OkHttpClient();
     ListView listModules;
+    Spinner spinner;
     ArrayList<Module> modules = new ArrayList<>();
     ModuleAdapter adapter = null;
 
@@ -44,6 +48,14 @@ public class ModuleFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_module, container, false);
         listModules = (ListView) view.findViewById(R.id.list_modules);
+        adapter = new ModuleAdapter(getActivity(), modules);
+        spinner = (Spinner) view.findViewById(R.id.module_semester_spinner);
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
+                                                                    R.array.module_semester_spinner_array,
+                                                                    android.R.layout.simple_spinner_item);
+
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
         new Task().execute();
         return view;
     }
@@ -79,6 +91,19 @@ public class ModuleFragment extends Fragment {
             modules = new Gson().fromJson(json.get("modules"), listType);
             adapter = new ModuleAdapter(getActivity(), modules);
             listModules.setAdapter(adapter);
+
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    adapter.getFilter().filter(spinner.getSelectedItem().toString());
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
         }
     }
 }

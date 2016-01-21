@@ -93,6 +93,8 @@ public class MainActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_modules_frag) {
             frag = new ModuleFragment();
+        } else if (id == R.id.nav_projects_frag) {
+            frag = new ProjectFragment();
         }
 
         if (frag != null) {
