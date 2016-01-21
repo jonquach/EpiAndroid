@@ -4,10 +4,14 @@
     <string name="input_hint_name">Name</string>
     <string name="input_hint_password">Password</string>
     <string name="login">Login</string>
+    <string name="modules">Modules</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_drawer">DrawerActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="module_semester">Semester: </string>
+    <string name="module_grade">Grade: </string>
 </resources>

@@ -1,5 +1,6 @@
 package treizieme.com.epinoish;
 
+import android.support.v4.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -85,10 +86,13 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        LoginFragment frag = null;
+        Fragment frag = null;
 
         if (id == R.id.nav_login_frag) {
             frag = new LoginFragment();
+        }
+        else if (id == R.id.nav_modules_frag) {
+            frag = new ModuleFragment();
         }
 
         if (frag != null) {
