@@ -9,17 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
-import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -48,12 +48,12 @@ public class ModuleFragment extends Fragment {
         return view;
     }
 
-    private class Task extends AsyncTask<String, String, JSONObject> {
+    private class Task extends AsyncTask<String, String, JsonObject> {
 
-        JSONObject jsonModules;
+        JsonObject jsonModules;
 
         @Override
-        protected JSONObject doInBackground(String... params) {
+        protected JsonObject doInBackground(String... params) {
             SharedPreferences prefs = getActivity().getPreferences(0);
             String token = prefs.getString("token", "empty");
 
@@ -64,44 +64,21 @@ public class ModuleFragment extends Fragment {
 
             try {
                 Response response = client.newCall(request).execute();
-                jsonModules = new JSONObject(response.body().string());
+                jsonModules = new JsonParser().parse(response.body().string()).getAsJsonObject();
                 return jsonModules;
-            } catch (IOException | JSONException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             return null;
         }
 
         @Override
-        protected void onPostExecute(JSONObject json) {
+        protected void onPostExecute(JsonObject json) {
             super.onPostExecute(json);
-                try {
-                    JSONArray modulesJSON = json.getJSONArray("modules");
-                    for(int i=0; i<modulesJSON.length(); i++) {
-                        JSONObject json_data = modulesJSON.getJSONObject(i);
-                        Module item = new Module();
-                        item.setScolarYear(json_data.getInt("scolaryear"));
-                        item.setIdUserHistory(json_data.getString("id_user_history"));
-                        item.setCodeModule(json_data.getString("codemodule"));
-                        item.setCodeInstance(json_data.getString("codeinstance"));
-                        item.setTitle(json_data.getString("title"));
-                        item.setIdInstance(json_data.getInt("id_instance"));
-                        item.setDateIns(json_data.getString("date_ins"));
-                        item.setCycle(json_data.getString("cycle"));
-                        item.setGrade(json_data.getString("grade"));
-                        item.setFlags(json_data.getString("flags"));
-                        item.setCredits(json_data.getInt("credits"));
-                        item.setBarrage(json_data.getInt("barrage"));
-                        item.setInstanceId(json_data.getInt("instance_id"));
-                        item.setModuleRating(json_data.getString("module_rating"));
-                        item.setSemester(json_data.getString("semester"));
-                        modules.add(item);
-                    }
-                    adapter = new ModuleAdapter(getActivity(), modules);
-                    listModules.setAdapter(adapter);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            Type listType = new TypeToken<List<Module>>() {}.getType();
+            modules = new Gson().fromJson(json.get("modules"), listType);
+            adapter = new ModuleAdapter(getActivity(), modules);
+            listModules.setAdapter(adapter);
         }
     }
 }

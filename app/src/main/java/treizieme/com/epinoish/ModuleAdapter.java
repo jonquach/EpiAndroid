@@ -47,13 +47,13 @@ public class ModuleAdapter extends BaseAdapter {
             layoutItem = (LinearLayout) convertView;
         }
 
-        TextView module_code_module = (TextView)layoutItem.findViewById(R.id.module_code_module);
         TextView module_title = (TextView)layoutItem.findViewById(R.id.module_title);
         TextView module_grade = (TextView)layoutItem.findViewById(R.id.module_grade);
+        TextView module_semester = (TextView)layoutItem.findViewById(R.id.module_semester);
 
-        module_code_module.setText(mListModule.get(position).getCodeModule());
         module_title.setText(mListModule.get(position).getTitle());
         module_grade.setText(mListModule.get(position).getGrade());
+        module_semester.setText(mListModule.get(position).getSemester());
         return layoutItem;
     }
 }

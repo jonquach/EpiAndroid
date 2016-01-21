@@ -4,20 +4,47 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/module_code_module"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-
-    <TextView
         android:id="@+id/module_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
 
-    <TextView
-        android:id="@+id/module_grade"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/module_semester"
+            />
+
+        <TextView
+            android:id="@+id/module_semester"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/module_grade"
+            />
+
+        <TextView
+            android:id="@+id/module_grade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+
 </LinearLayout>
