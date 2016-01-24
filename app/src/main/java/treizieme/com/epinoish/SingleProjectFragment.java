@@ -8,17 +8,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -29,35 +26,33 @@ import okhttp3.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProjectFragment extends Fragment {
-
+public class SingleProjectFragment extends Fragment {
 
     private final OkHttpClient client = new OkHttpClient();
-    ListView listProjects;
-    ArrayList<Project> projects = new ArrayList<>();
-    ProjectAdapter adapter = null;
+    String scolaryear = null;
+    String codeinstance = null;
+    String codemodule = null;
+    String codeacti = null;
+    TextView singleProjectTitle = null;
+    TextView singleProjectDescription = null;
 
-
-    public ProjectFragment() {
+    public SingleProjectFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_project, container, false);
-        listProjects = (ListView) view.findViewById(R.id.list_projects);
-        listProjects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Project clicked = (Project) listProjects.getItemAtPosition(position);
-                ((MainActivity) getActivity()).loadSingleProjectFragment(clicked.getScolaryear(),
-                        clicked.getCodemodule(),
-                        clicked.getCodeinstance(),
-                        clicked.getCodeacti());
-            }
-        });
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_single_project, container, false);
+
+        singleProjectDescription = (TextView) view.findViewById(R.id.single_project_description);
+        singleProjectTitle = (TextView) view.findViewById(R.id.single_project_title);
+        Bundle bundle = this.getArguments();
+        scolaryear = bundle.getString("scolaryear");
+        codeinstance = bundle.getString("codeinstance");
+        codemodule = bundle.getString("codemodule");
+        codeacti = bundle.getString("codeacti");
         new Task().execute();
         return view;
     }
@@ -70,7 +65,11 @@ public class ProjectFragment extends Fragment {
             String token = prefs.getString("token", "empty");
 
             Request request = new Request.Builder()
-                    .url("http://epitech-api.herokuapp.com/projects?token=" + token)
+                    .url("http://epitech-api.herokuapp.com/project?token=" + token
+                    + "&scolaryear=" + scolaryear
+                    + "&codemodule=" + codemodule
+                    + "&codeinstance=" + codeinstance
+                    + "&codeacti=" + codeacti)
                     .get()
                     .build();
 
@@ -86,10 +85,12 @@ public class ProjectFragment extends Fragment {
         @Override
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
-            Type listType = new TypeToken<List<Project>>() {}.getType();
-            projects = new Gson().fromJson(json, listType);
-            adapter = new ProjectAdapter(getActivity(), projects);
-            listProjects.setAdapter(adapter);
+            JsonObject gObj = new Gson().fromJson(json, JsonObject.class);
+            System.out.println("OBJ = " + gObj.toString());
+            singleProjectTitle.setText(gObj.get("project_title").toString()
+                    .replace("\\n", "\n").replace("\"", ""));
+            singleProjectDescription.setText(gObj.get("description").toString()
+                    .replace("\\n", "\n").replace("\"", ""));
         }
     }
 }

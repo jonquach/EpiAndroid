@@ -107,4 +107,17 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void loadSingleProjectFragment(String scolaryear, String codemodule, String codeinstance, String codeacti) {
+        Bundle bundle = new Bundle();
+        bundle.putString("scolaryear", scolaryear);
+        bundle.putString("codemodule", codemodule);
+        bundle.putString("codeinstance", codeinstance);
+        bundle.putString("codeacti", codeacti);
+        SingleProjectFragment fragInfo = new SingleProjectFragment();
+        fragInfo.setArguments(bundle);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragInfo);
+        ft.commit();
+    }
 }

@@ -31,4 +31,6 @@
 
     <string name="project_hyphen"> - </string>
 
+    <string name="single_project_token">Valid token</string>
+    <string name="single_project_sub">Subscribe</string>
 </resources>
