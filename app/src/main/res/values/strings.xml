@@ -33,4 +33,8 @@
 
     <string name="single_project_token">Valid token</string>
     <string name="single_project_sub">Subscribe</string>
+
+    <string name="single_module_lbl_grade">Grade: </string>
+    <string name="single_module_lbl_credits">Credits: </string>
+    <string name="single_module_sub">Subscribe</string>
 </resources>

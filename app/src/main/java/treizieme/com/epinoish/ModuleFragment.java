@@ -48,6 +48,15 @@ public class ModuleFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_module, container, false);
         listModules = (ListView) view.findViewById(R.id.list_modules);
+        listModules.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Module clicked = (Module) listModules.getItemAtPosition(position);
+                ((MainActivity) getActivity()).loadSingleModuleFragment((new Integer(clicked.getScolaryear())).toString(),
+                        clicked.getCodemodule(),
+                        clicked.getCodeinstance());
+            }
+        });
         adapter = new ModuleAdapter(getActivity(), modules);
         spinner = (Spinner) view.findViewById(R.id.module_semester_spinner);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getActivity(),

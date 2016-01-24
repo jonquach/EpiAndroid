@@ -120,4 +120,16 @@ public class MainActivity extends AppCompatActivity
         ft.replace(R.id.content_frame, fragInfo);
         ft.commit();
     }
+
+    public void loadSingleModuleFragment(String scolaryear, String codemodule, String codeinstance) {
+        Bundle bundle = new Bundle();
+        bundle.putString("scolaryear", scolaryear);
+        bundle.putString("codemodule", codemodule);
+        bundle.putString("codeinstance", codeinstance);
+        SingleModuleFragment fragInfo = new SingleModuleFragment();
+        fragInfo.setArguments(bundle);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragInfo);
+        ft.commit();
+    }
 }
