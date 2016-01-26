@@ -10,6 +10,7 @@ import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlanningAdapter extends BaseAdapter implements Filterable {
@@ -69,6 +70,34 @@ public class PlanningAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public Filter getFilter() {
-        return null;
+        return new Filter() {
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults results = new FilterResults();
+
+                if (constraint == null || constraint.length() == 0) {
+                    results.values = mListPlanning;
+                    results.values = mListPlanning.size();
+                } else {
+                    ArrayList<Planning> filterResultsData = new ArrayList<>();
+                    for (Planning item : mListPlanning) {
+                        if (item.getSemester().toString().equals(constraint)) {
+                            filterResultsData.add(item);
+                        }
+                    }
+                    results.values = filterResultsData;
+                    results.count = filterResultsData.size();
+                }
+                return results;
+            }
+
+            @Override
+            @SuppressWarnings("unchecked")
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                mListPlanningFiltered = (List<Planning>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 }

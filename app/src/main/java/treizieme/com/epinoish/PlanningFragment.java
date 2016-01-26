@@ -8,7 +8,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -33,6 +36,7 @@ import okhttp3.Response;
 public class PlanningFragment extends Fragment {
     private final OkHttpClient client = new OkHttpClient();
     ListView listEvents;
+    Spinner spinner;
     List<Planning> events = new ArrayList<>();
     PlanningAdapter adapter = null;
 
@@ -48,6 +52,13 @@ public class PlanningFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_planning, container, false);
         listEvents = (ListView) view.findViewById(R.id.list_events);
         adapter = new PlanningAdapter(getActivity(), events);
+        spinner = (Spinner) view.findViewById(R.id.planning_semester_spinner);
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.module_semester_spinner_array,
+                android.R.layout.simple_spinner_item);
+
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
         new Task().execute();
         return view;
     }
@@ -96,6 +107,18 @@ public class PlanningFragment extends Fragment {
             events = new Gson().fromJson(json, listType);
             adapter = new PlanningAdapter(getActivity(), events);
             listEvents.setAdapter(adapter);
+
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    adapter.getFilter().filter(spinner.getSelectedItem().toString());
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
         }
     }
 }
