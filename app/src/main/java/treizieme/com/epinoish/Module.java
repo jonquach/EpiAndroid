@@ -1,10 +1,10 @@
 package treizieme.com.epinoish;
 
 public class Module {
-    private int     scolarYear;
+    private int     scolaryear;
     private String  idUserHistory;
-    private String  codeModule;
-    private String  codeInstance;
+    private String  codemodule;
+    private String  codeinstance;
     private String  title;
     private int     idInstance;
     private String  dateIns;
@@ -17,12 +17,28 @@ public class Module {
     private String  moduleRating;
     private String  semester;
 
-    public int getScolarYear() {
-        return scolarYear;
+    public int getScolaryear() {
+        return scolaryear;
     }
 
-    public void setScolarYear(int scolarYear) {
-        this.scolarYear = scolarYear;
+    public void setScolaryear(int scolaryear) {
+        this.scolaryear = scolaryear;
+    }
+
+    public String getCodemodule() {
+        return codemodule;
+    }
+
+    public void setCodemodule(String codemodule) {
+        this.codemodule = codemodule;
+    }
+
+    public String getCodeinstance() {
+        return codeinstance;
+    }
+
+    public void setCodeinstance(String codeinstance) {
+        this.codeinstance = codeinstance;
     }
 
     public String getIdUserHistory() {
@@ -31,22 +47,6 @@ public class Module {
 
     public void setIdUserHistory(String idUserHistory) {
         this.idUserHistory = idUserHistory;
-    }
-
-    public String getCodeModule() {
-        return codeModule;
-    }
-
-    public void setCodeModule(String codeModule) {
-        this.codeModule = codeModule;
-    }
-
-    public String getCodeInstance() {
-        return codeInstance;
-    }
-
-    public void setCodeInstance(String codeInstance) {
-        this.codeInstance = codeInstance;
     }
 
     public String getTitle() {
