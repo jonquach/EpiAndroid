@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/module_semester"
+            android:text="@string/marks_titlemodule"
             />
 
         <TextView
@@ -36,7 +36,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/marks_title"
+            android:text="@string/marks_marks"
             />
 
         <TextView
