@@ -7,6 +7,7 @@
     <string name="modules">Modules</string>
     <string name="projects">Projects</string>
     <string name="planning">Planning</string>
+    <string name="marks">Marks</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_drawer">DrawerActivity</string>
