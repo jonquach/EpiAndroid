@@ -15,6 +15,10 @@
         <item
             android:id="@+id/nav_planning_frag"
             android:title="@string/planning" />
+
+        <item
+            android:id="@+id/nav_marks_frag"
+            android:title="@string/marks" />
     </group>
 
     <!-- TODO: REMOVE HARDCODED STRING HERE !!-->

@@ -97,6 +97,8 @@ public class MainActivity extends AppCompatActivity
             frag = new ProjectFragment();
         } else if (id == R.id.nav_planning_frag) {
             frag = new PlanningFragment();
+        } else if (id == R.id.nav_marks_frag) {
+            frag =  new MarksFragement();
         }
 
         if (frag != null) {
