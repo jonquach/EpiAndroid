@@ -6,6 +6,7 @@
     <string name="login">Login</string>
     <string name="modules">Modules</string>
     <string name="projects">Projects</string>
+    <string name="planning">Planning</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_drawer">DrawerActivity</string>
@@ -37,4 +38,6 @@
     <string name="single_module_lbl_grade">Grade: </string>
     <string name="single_module_lbl_credits">Credits: </string>
     <string name="single_module_sub">Subscribe</string>
+
+    <string name="planning_lbl_room">Room: </string>
 </resources>
