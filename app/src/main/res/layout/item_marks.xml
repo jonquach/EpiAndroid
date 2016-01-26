@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/module_title"
+        android:id="@+id/marks_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
@@ -21,7 +21,7 @@
             />
 
         <TextView
-            android:id="@+id/module_semester"
+            android:id="@+id/marks_titlemodule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
@@ -36,11 +36,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/module_grade"
+            android:text="@string/marks_title"
             />
 
         <TextView
-            android:id="@+id/module_grade"
+            android:id="@+id/marks_notes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />

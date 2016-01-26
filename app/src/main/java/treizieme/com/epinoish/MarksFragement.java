@@ -71,6 +71,7 @@ public class MarksFragement extends Fragment {
             try {
                 Response response = client.newCall(request).execute();
                 jsonModules = new JsonParser().parse(response.body().string()).getAsJsonObject();
+                System.out.println(jsonModules);
                 return jsonModules;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -81,8 +82,8 @@ public class MarksFragement extends Fragment {
         @Override
         protected void onPostExecute(JsonObject json) {
             super.onPostExecute(json);
-            Type listType = new TypeToken<List<Module>>() {}.getType();
-            marks = new Gson().fromJson(json.get("marks"), listType);
+            Type listType = new TypeToken<List<Marks>>() {}.getType();
+            marks = new Gson().fromJson(json.get("notes"), listType);
             adapter = new MarksAdapter(getActivity(), marks);
             listMarks.setAdapter(adapter);
 

@@ -17,6 +17,10 @@
 
     <string name="module_semester">Semester: </string>
     <string name="module_grade">Grade: </string>
+
+    <string name="marks_titlemodule">Module: </string>
+    <string name="marks_title">Projet: </string>
+
     <string-array name="module_semester_spinner_array">
         <item>0</item>
         <item>1</item>

@@ -47,18 +47,18 @@ public class MarksAdapter extends BaseAdapter implements Filterable{
         LinearLayout layoutItem;
 
         if (convertView == null) {
-            layoutItem = (LinearLayout) mInflater.inflate(R.layout.item_module, parent, false);
+            layoutItem = (LinearLayout) mInflater.inflate(R.layout.item_marks, parent, false);
         } else {
             layoutItem = (LinearLayout) convertView;
         }
 
-        TextView module_title = (TextView)layoutItem.findViewById(R.id.module_title);
-        TextView module_grade = (TextView)layoutItem.findViewById(R.id.module_grade);
-        TextView module_semester = (TextView)layoutItem.findViewById(R.id.module_semester);
+        TextView marks_titlemodule = (TextView)layoutItem.findViewById(R.id.marks_titlemodule);
+        TextView marks_title = (TextView)layoutItem.findViewById(R.id.marks_title);
+        TextView marks_notes = (TextView)layoutItem.findViewById(R.id.marks_notes);
 
-        //module_title.setText(mListMarksFiltered.get(position).getTitle());
-        //module_grade.setText(mListMarksFiltered.get(position).getGrade());
-        //module_semester.setText(mListMarksFiltered.get(position).getSemester());
+        marks_title.setText(mListMarksFiltered.get(position).getTitle());
+        marks_titlemodule.setText(mListMarksFiltered.get(position).getTitlemodule());
+        marks_notes.setText(mListMarksFiltered.get(position).getFinal_note());
         return layoutItem;
     }
 
