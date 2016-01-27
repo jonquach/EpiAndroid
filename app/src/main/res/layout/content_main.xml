@@ -12,19 +12,4 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/message"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp" />
-
-    <ListView
-        android:id="@+id/message_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp" >
-    </ListView>
-
 </RelativeLayout>

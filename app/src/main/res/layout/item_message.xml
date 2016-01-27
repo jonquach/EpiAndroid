@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/message_user"
+            android:src="@drawable/nopicture"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="3dp"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:id="@+id/message_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:textSize="13sp"
+            android:layout_toRightOf="@+id/message_user"
+            android:layout_alignTop="@+id/message_user" />
+
+        <TextView
+            android:id="@+id/message_content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:layout_toRightOf="@+id/message_user"
+            android:layout_alignLeft="@+id/message_title"
+            android:layout_below="@+id/message_title"
+            />
+
+        <TextView
+            android:id="@+id/message_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:layout_toRightOf="@+id/message_user"
+            android:layout_alignRight="@+id/message_content"
+            android:layout_below="@+id/message_content"
+            android:gravity="right" />
+    </RelativeLayout>
+
+</LinearLayout>

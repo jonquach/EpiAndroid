@@ -2,11 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="treizieme.com.epinoish.LoginFragment">
+    tools:context="treizieme.com.epinoish.ProjectFragment">
 
-    <include layout="@layout/content_main_page"
+    <include layout="@layout/content_home"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"/>
+        android:layout_width="match_parent" />
 
 </FrameLayout>

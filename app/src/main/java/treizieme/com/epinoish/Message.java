@@ -12,9 +12,6 @@ public class Message {
     private String content;
     private String date;
 
-    public Message() {
-    }
-
     public String getId() {
         return id;
     }

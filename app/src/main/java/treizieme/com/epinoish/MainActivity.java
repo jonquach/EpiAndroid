@@ -1,12 +1,12 @@
 package treizieme.com.epinoish;
 
 import android.app.FragmentManager;
-import android.support.v4.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -55,16 +55,18 @@ public class MainActivity extends AppCompatActivity
             ft.replace(R.id.content_frame, frag);
             ft.commit();
         } else {
-            Toast.makeText(this, "Already logged", Toast.LENGTH_SHORT).show();
             UserData userData = UserData.getInstance();
-
             userData.setToken(sharedPref.getString("token", null));
+
+            Toast.makeText(this, "Already logged", Toast.LENGTH_SHORT).show();
+            Fragment frag = new HomeFragment();
+
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_frame, frag);
+            ft.commit();
         }
+
         System.out.println("####### ------> TOKEN : " + sharedPref.getString("token", "failed"));
-        LoginFragment frag = new LoginFragment();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, frag);
-        ft.commit();
     }
 
     @Override
@@ -117,7 +119,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_marks_frag) {
             frag = new MarksFragement();
         } else if (id == R.id.nav_home_frag) {
-            frag = new MainPageFragment();
+            frag = new HomeFragment();
         }
 
         if (frag != null) {
@@ -159,7 +161,7 @@ public class MainActivity extends AppCompatActivity
         ft.commit();
     }
 
-    public void loadTokenFragment(String scolaryear,String codemodule, String codeinstance, String codeacti, String codeevent) {
+    public void loadTokenFragment(String scolaryear, String codemodule, String codeinstance, String codeacti, String codeevent) {
         Bundle bundle = new Bundle();
         bundle.putString("scolaryear", scolaryear);
         bundle.putString("codemodule", codemodule);
