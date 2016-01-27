@@ -23,13 +23,6 @@
             android:text="@string/single_project_sub"
             android:id="@+id/single_project_sub" />
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="37dp"
-            android:text="@string/single_project_token"
-            android:id="@+id/single_project_token" />
-
     </LinearLayout>
 
     <TextView

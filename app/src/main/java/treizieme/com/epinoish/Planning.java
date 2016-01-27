@@ -12,7 +12,7 @@ public class Planning {
     private String allowed_planning_end;
     private Boolean module_registered;
     private Boolean register_prof;
-    private Boolean event_registered;
+    private String event_registered;
     private String scolaryear;
     private String codemodule;
     private Boolean allow_token;
@@ -101,11 +101,11 @@ public class Planning {
         this.register_prof = register_prof;
     }
 
-    public Boolean getEvent_registered() {
+    public String getEvent_registered() {
         return event_registered;
     }
 
-    public void setEvent_registered(Boolean event_registered) {
+    public void setEvent_registered(String event_registered) {
         this.event_registered = event_registered;
     }
 

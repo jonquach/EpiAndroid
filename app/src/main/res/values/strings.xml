@@ -38,7 +38,7 @@
 
     <string name="project_hyphen"> - </string>
 
-    <string name="single_project_token">Valid token</string>
+    <string name="single_project_token">Tap to validate token</string>
     <string name="single_project_sub">Subscribe</string>
 
     <string name="single_module_lbl_grade">Grade: </string>
@@ -46,4 +46,7 @@
     <string name="single_module_sub">Subscribe</string>
 
     <string name="planning_lbl_room">Room: </string>
+    <string name="planning_hint_token">Token</string>
+    <string name="planning_submit_token">Submit token</string>
+
 </resources>

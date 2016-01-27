@@ -59,4 +59,13 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/planning_token"
+        android:visibility="gone"
+        android:textColor="@color/colorPrimaryDark"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/single_project_token"
+        />
 </LinearLayout>
