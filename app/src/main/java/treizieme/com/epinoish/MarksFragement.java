@@ -1,5 +1,6 @@
 package treizieme.com.epinoish;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.content.SharedPreferences;
@@ -34,6 +35,7 @@ import okhttp3.Response;
 public class MarksFragement extends Fragment {
 
     private final OkHttpClient client = new OkHttpClient();
+    private ProgressDialog progressDialog;
     ListView listMarks;
     Spinner spinner;
     ArrayList<Marks> marks = new ArrayList<>();
@@ -47,6 +49,10 @@ public class MarksFragement extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_marks, container, false);
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
         listMarks = (ListView) view.findViewById(R.id.list_marks);
 
         adapter = new MarksAdapter(getActivity(), marks);
@@ -86,7 +92,7 @@ public class MarksFragement extends Fragment {
             marks = new Gson().fromJson(json.get("notes"), listType);
             adapter = new MarksAdapter(getActivity(), marks);
             listMarks.setAdapter(adapter);
-
+            progressDialog.dismiss();
         }
     }
 

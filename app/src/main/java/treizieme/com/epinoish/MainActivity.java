@@ -1,5 +1,6 @@
 package treizieme.com.epinoish;
 
+import android.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -47,13 +48,17 @@ public class MainActivity extends AppCompatActivity
 
         SharedPreferences sharedPref = getPreferences(0);
         System.out.println("####### ------> TOKEN : " + sharedPref.getString("token", "failed"));
+        LoginFragment frag = new LoginFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, frag);
+        ft.commit();
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStack();
         } else {
             super.onBackPressed();
         }
@@ -104,6 +109,7 @@ public class MainActivity extends AppCompatActivity
         if (frag != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.content_frame, frag);
+            ft.addToBackStack(null);
             ft.commit();
         }
 
@@ -122,6 +128,7 @@ public class MainActivity extends AppCompatActivity
         fragInfo.setArguments(bundle);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragInfo);
+        ft.addToBackStack(null);
         ft.commit();
     }
 
@@ -134,6 +141,7 @@ public class MainActivity extends AppCompatActivity
         fragInfo.setArguments(bundle);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragInfo);
+        ft.addToBackStack(null);
         ft.commit();
     }
 
@@ -148,6 +156,7 @@ public class MainActivity extends AppCompatActivity
         fragInfo.setArguments(bundle);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragInfo);
+        ft.addToBackStack(null);
         ft.commit();
     }
 }

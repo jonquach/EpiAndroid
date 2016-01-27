@@ -1,6 +1,7 @@
 package treizieme.com.epinoish;
 
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ public class ProjectFragment extends Fragment {
 
     private final OkHttpClient client = new OkHttpClient();
     ListView listProjects;
+    private ProgressDialog progressDialog;
     ArrayList<Project> projects = new ArrayList<>();
     ProjectAdapter adapter = null;
 
@@ -47,6 +49,10 @@ public class ProjectFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_project, container, false);
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
         listProjects = (ListView) view.findViewById(R.id.list_projects);
         listProjects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -88,6 +94,7 @@ public class ProjectFragment extends Fragment {
             super.onPostExecute(json);
             Type listType = new TypeToken<List<Project>>() {}.getType();
             projects = new Gson().fromJson(json, listType);
+            progressDialog.dismiss();
             adapter = new ProjectAdapter(getActivity(), projects);
             listProjects.setAdapter(adapter);
         }
