@@ -51,6 +51,20 @@ public class PlanningFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_planning, container, false);
         listEvents = (ListView) view.findViewById(R.id.list_events);
+        listEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Planning clicked = (Planning) listEvents.getItemAtPosition(position);
+                if (clicked.getEvent_registered() != null && clicked.getEvent_registered().equals("registered")
+//                        && clicked.getAllow_token()
+                        )
+                ((MainActivity) getActivity()).loadTokenFragment(clicked.getScolaryear(),
+                        clicked.getCodemodule(),
+                        clicked.getCodeinstance(),
+                        clicked.getCodeacti(),
+                        clicked.getCodeevent());
+            }
+        });
         adapter = new PlanningAdapter(getActivity(), events);
         spinner = (Spinner) view.findViewById(R.id.planning_semester_spinner);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getActivity(),

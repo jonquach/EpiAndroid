@@ -1,0 +1,13 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="treizieme.com.epinoish.TokenFragment">
+
+    <include
+        layout="@layout/content_token"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_height="352dp"
+        android:layout_width="match_parent">
+    </include>
+</FrameLayout>

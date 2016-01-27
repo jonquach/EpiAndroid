@@ -59,21 +59,13 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/planning_token"
+        android:visibility="gone"
+        android:textColor="@color/colorPrimaryDark"
+        android:textAppearance="?android:textAppearanceMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:maxLength="8"
-            android:inputType="number"
-            android:layout_width="100dp"
-            android:layout_height="45dp"
-            android:hint="@string/planning_hint_token"
-            android:id="@+id/planning_field_token"
-            android:visibility="gone"
-            />
-
-    </LinearLayout>
-
+        android:text="@string/single_project_token"
+        />
 </LinearLayout>

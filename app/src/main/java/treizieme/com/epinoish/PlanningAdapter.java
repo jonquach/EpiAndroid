@@ -57,14 +57,16 @@ public class PlanningAdapter extends BaseAdapter implements Filterable {
         TextView planning_start = (TextView)layoutItem.findViewById(R.id.planning_start);
         TextView planning_end = (TextView)layoutItem.findViewById(R.id.planning_end);
         TextView planning_room = (TextView)layoutItem.findViewById(R.id.planning_room);
-        final EditText planning_field_token = (EditText)layoutItem.findViewById(R.id.planning_field_token);
+        TextView planning_token = (TextView)layoutItem.findViewById(R.id.planning_token);
 
-        if (mListPlanningFiltered.get(position).getEvent_registered() != null
-                && mListPlanningFiltered.get(position).getEvent_registered().equals("registered")
+        Planning current = mListPlanningFiltered.get(position);
+
+        if (current.getEvent_registered() != null
+                && current.getEvent_registered().equals("registered")
+                && !current.getModule_registered().equals(false)
         //        && mListPlanningFiltered.get(position).getAllow_token()
                 ) {
-            System.out.println(mListPlanningFiltered.get(position).getEvent_registered());
-            planning_field_token.setVisibility(View.VISIBLE);
+            planning_token.setVisibility(View.VISIBLE);
         }
         planning_title.setText(mListPlanningFiltered.get(position).getActi_title());
         planning_date.setText(mListPlanningFiltered.get(position).getStart().split(" ")[0]);

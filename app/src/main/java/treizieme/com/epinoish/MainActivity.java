@@ -136,4 +136,18 @@ public class MainActivity extends AppCompatActivity
         ft.replace(R.id.content_frame, fragInfo);
         ft.commit();
     }
+
+    public void loadTokenFragment(String scolaryear,String codemodule, String codeinstance, String codeacti, String codeevent) {
+        Bundle bundle = new Bundle();
+        bundle.putString("scolaryear", scolaryear);
+        bundle.putString("codemodule", codemodule);
+        bundle.putString("codeinstance", codeinstance);
+        bundle.putString("codeacti", codeacti);
+        bundle.putString("codeevent", codeevent);
+        TokenFragment fragInfo = new TokenFragment();
+        fragInfo.setArguments(bundle);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragInfo);
+        ft.commit();
+    }
 }
