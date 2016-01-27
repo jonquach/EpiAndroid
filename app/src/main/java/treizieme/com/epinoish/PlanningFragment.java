@@ -70,6 +70,7 @@ public class PlanningFragment extends Fragment {
         Calendar c = Calendar.getInstance();
         try {
             c.setTime(sdfDate.parse(strDate));
+            c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
             c.add(Calendar.DATE, nbDays);
             strDate = sdfDate.format(c.getTime());
             return strDate;

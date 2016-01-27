@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
@@ -56,7 +57,15 @@ public class PlanningAdapter extends BaseAdapter implements Filterable {
         TextView planning_start = (TextView)layoutItem.findViewById(R.id.planning_start);
         TextView planning_end = (TextView)layoutItem.findViewById(R.id.planning_end);
         TextView planning_room = (TextView)layoutItem.findViewById(R.id.planning_room);
+        final EditText planning_field_token = (EditText)layoutItem.findViewById(R.id.planning_field_token);
 
+        if (mListPlanningFiltered.get(position).getEvent_registered() != null
+                && mListPlanningFiltered.get(position).getEvent_registered().equals("registered")
+        //        && mListPlanningFiltered.get(position).getAllow_token()
+                ) {
+            System.out.println(mListPlanningFiltered.get(position).getEvent_registered());
+            planning_field_token.setVisibility(View.VISIBLE);
+        }
         planning_title.setText(mListPlanningFiltered.get(position).getActi_title());
         planning_date.setText(mListPlanningFiltered.get(position).getStart().split(" ")[0]);
         planning_start.setText(mListPlanningFiltered.get(position).getStart().split(" ")[1]);
