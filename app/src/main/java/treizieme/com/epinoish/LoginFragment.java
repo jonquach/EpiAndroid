@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,15 @@ public class LoginFragment extends Fragment {
 
         // Login btn listener
         btnLogin = (Button) view.findViewById(R.id.btn_login);
+
+        SharedPreferences sharedPref = getActivity().getPreferences(0);
+        String tmp;
+
+        if ((tmp = sharedPref.getString("login", null)) != null) {
+            login.setText(tmp);
+        } else if ((tmp = sharedPref.getString("password", null)) != null) {
+            password.setText(tmp);
+        }
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +136,8 @@ public class LoginFragment extends Fragment {
                             SharedPreferences sharedPref = getActivity().getPreferences(0);
                             SharedPreferences.Editor editor = sharedPref.edit();
 
+                            editor.putString("login", userData.getLogin());
+                            editor.putString("password", userData.getPassword());
                             editor.putString("token", userData.getToken());
                             editor.apply();
 
@@ -138,6 +150,11 @@ public class LoginFragment extends Fragment {
                             public void run() {
                                 Toast.makeText(getActivity().getBaseContext(), "Login success", Toast.LENGTH_LONG).show();
                                 // End login fragment here call to profile view
+                                Fragment frag = new MainPageFragment();
+
+                                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                                ft.replace(R.id.content_frame, frag);
+                                ft.commit();
                             }
                         });
                     }

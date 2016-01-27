@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 UserData u = UserData.getInstance();
-                Snackbar.make(view, "Your token is " + u.getToken(), Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Your token is " + u.getToken(), Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
             }
         });
@@ -47,6 +48,18 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         SharedPreferences sharedPref = getPreferences(0);
+        if (sharedPref.getString("token", "failed") == "failed") {
+            Fragment frag = new LoginFragment();
+
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_frame, frag);
+            ft.commit();
+        } else {
+            Toast.makeText(this, "Already logged", Toast.LENGTH_SHORT).show();
+            UserData userData = UserData.getInstance();
+
+            userData.setToken(sharedPref.getString("token", null));
+        }
         System.out.println("####### ------> TOKEN : " + sharedPref.getString("token", "failed"));
         LoginFragment frag = new LoginFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -95,15 +108,16 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_login_frag) {
             frag = new LoginFragment();
-        }
-        else if (id == R.id.nav_modules_frag) {
+        } else if (id == R.id.nav_modules_frag) {
             frag = new ModuleFragment();
         } else if (id == R.id.nav_projects_frag) {
             frag = new ProjectFragment();
         } else if (id == R.id.nav_planning_frag) {
             frag = new PlanningFragment();
         } else if (id == R.id.nav_marks_frag) {
-            frag =  new MarksFragement();
+            frag = new MarksFragement();
+        } else if (id == R.id.nav_home_frag) {
+            frag = new MainPageFragment();
         }
 
         if (frag != null) {
