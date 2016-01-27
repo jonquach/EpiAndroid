@@ -1,10 +1,12 @@
 package treizieme.com.epinoish;
 
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ import okhttp3.Response;
 public class SingleModuleFragment extends Fragment {
 
     private final OkHttpClient client = new OkHttpClient();
+    private ProgressDialog progressDialog;
     String scolaryear = null;
     String codeinstance = null;
     String codemodule = null;
@@ -44,11 +47,16 @@ public class SingleModuleFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_single_module, container, false);
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
         singleModuleTitle = (TextView) view.findViewById(R.id.single_module_title);
         singleModuleDescription = (TextView) view.findViewById(R.id.single_module_description);
         singleModuleGrade = (TextView) view.findViewById(R.id.single_module_grade);
         singleModuleCredits = (TextView) view.findViewById(R.id.single_module_credits);
         Bundle bundle = this.getArguments();
+        singleModuleDescription.setMovementMethod(new ScrollingMovementMethod());
         scolaryear = bundle.getString("scolaryear");
         codeinstance = bundle.getString("codeinstance");
         codemodule = bundle.getString("codemodule");
@@ -84,6 +92,7 @@ public class SingleModuleFragment extends Fragment {
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
             JsonObject gObj = new Gson().fromJson(json, JsonObject.class);
+            progressDialog.dismiss();
             singleModuleTitle.setText(gObj.get("title").toString()
                     .replace("\\n", "\n").replace("\"", ""));
             singleModuleDescription.setText(gObj.get("description").toString()

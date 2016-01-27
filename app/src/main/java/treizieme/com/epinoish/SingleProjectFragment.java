@@ -1,10 +1,12 @@
 package treizieme.com.epinoish;
 
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,7 @@ import okhttp3.Response;
 public class SingleProjectFragment extends Fragment {
 
     private final OkHttpClient client = new OkHttpClient();
+    private ProgressDialog progressDialog;
     String scolaryear = null;
     String codeinstance = null;
     String codemodule = null;
@@ -45,9 +48,13 @@ public class SingleProjectFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_single_project, container, false);
-
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
         singleProjectDescription = (TextView) view.findViewById(R.id.single_project_description);
         singleProjectTitle = (TextView) view.findViewById(R.id.single_project_title);
+        singleProjectDescription.setMovementMethod(new ScrollingMovementMethod());
         Bundle bundle = this.getArguments();
         scolaryear = bundle.getString("scolaryear");
         codeinstance = bundle.getString("codeinstance");
@@ -86,6 +93,7 @@ public class SingleProjectFragment extends Fragment {
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
             JsonObject gObj = new Gson().fromJson(json, JsonObject.class);
+            progressDialog.dismiss();
             singleProjectTitle.setText(gObj.get("project_title").toString()
                     .replace("\\n", "\n").replace("\"", ""));
             singleProjectDescription.setText(gObj.get("description").toString()

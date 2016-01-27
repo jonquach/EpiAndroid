@@ -47,6 +47,10 @@ public class MainActivity extends AppCompatActivity
 
         SharedPreferences sharedPref = getPreferences(0);
         System.out.println("####### ------> TOKEN : " + sharedPref.getString("token", "failed"));
+        LoginFragment frag = new LoginFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, frag);
+        ft.commit();
     }
 
     @Override

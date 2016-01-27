@@ -1,6 +1,7 @@
 package treizieme.com.epinoish;
 
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ import okhttp3.Response;
  */
 public class PlanningFragment extends Fragment {
     private final OkHttpClient client = new OkHttpClient();
+    private ProgressDialog progressDialog;
     ListView listEvents;
     Spinner spinner;
     List<Planning> events = new ArrayList<>();
@@ -50,6 +52,10 @@ public class PlanningFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_planning, container, false);
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
         listEvents = (ListView) view.findViewById(R.id.list_events);
         listEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -122,7 +128,7 @@ public class PlanningFragment extends Fragment {
             events = new Gson().fromJson(json, listType);
             adapter = new PlanningAdapter(getActivity(), events);
             listEvents.setAdapter(adapter);
-
+            progressDialog.dismiss();
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
