@@ -149,7 +149,6 @@ public class LoginFragment extends Fragment {
                             public void run() {
                                 Toast.makeText(getActivity().getBaseContext(), "Login success", Toast.LENGTH_LONG).show();
                                 // End login fragment here call to profile view
-
                             }
                         });
                     }

@@ -1,7 +1,11 @@
 package treizieme.com.epinoish;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -57,14 +62,43 @@ public class MessageAdapter extends BaseAdapter {
         TextView messageDate = (TextView) layoutItem.findViewById(R.id.message_date);
         ImageView userImg = (ImageView) layoutItem.findViewById(R.id.message_user);
 
-        //Message current = _messageList.get(position);
-
         messageTitle.setText(Html.fromHtml(_messageList.get(position).getTitle()));
         messageContent.setText(Html.fromHtml(_messageList.get(position).getContent()));
         messageDate.setText(_messageList.get(position).getDate());
         // TODO: Get picture
-        userImg.setImageResource(R.drawable.nopicture);
+        if (_messageList.get(position).getUser().get("picture") != null) {
+            new DownloadImageTask((ImageView) layoutItem.findViewById(R.id.message_user))
+                    .execute(_messageList.get(position).getUser().get("picture"));
+        } else {
+            userImg.setImageResource(R.drawable.nopicture);
+        }
 
         return layoutItem;
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {;
+            String urlDisplay = urls[0];
+            Bitmap bm = null;
+
+            try {
+                InputStream in = new java.net.URL(urlDisplay).openStream();
+                bm = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return bm;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }

@@ -2,6 +2,9 @@ package treizieme.com.epinoish;
 
 import android.app.FragmentManager;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -13,13 +16,30 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.util.Map;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private final OkHttpClient client = new OkHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +68,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         SharedPreferences sharedPref = getPreferences(0);
-        if (sharedPref.getString("token", "failed") == "failed") {
+        if (sharedPref.getString("token", "failed").equals("failed")) {
             Fragment frag = new LoginFragment();
 
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -56,9 +76,16 @@ public class MainActivity extends AppCompatActivity
             ft.commit();
         } else {
             UserData userData = UserData.getInstance();
+            userData.setLogin(sharedPref.getString("login", null));
+            userData.setPassword(sharedPref.getString("password", null));
             userData.setToken(sharedPref.getString("token", null));
 
             Toast.makeText(this, "Already logged", Toast.LENGTH_SHORT).show();
+
+            if (userData.getLogin() != null) {
+                new Task().execute();
+            }
+
             Fragment frag = new HomeFragment();
 
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -131,7 +158,78 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
+    }
+
+    private class Task extends AsyncTask<String, String, String> {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        ImageView userImg = (ImageView) drawer.findViewById(R.id.user_picture);
+        TextView username = (TextView) drawer.findViewById(R.id.user_name);
+        TextView userInfo = (TextView) drawer.findViewById(R.id.user_info);
+
+        @Override
+        protected String doInBackground(String... params) {
+            UserData userData = UserData.getInstance();
+            String login = userData.getLogin();
+            String token = userData.getToken();
+
+            Request request = new Request.Builder()
+                    .url("http://epitech-api.herokuapp.com/photo?login=" + login + "&token=" + token)
+                    .get()
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String json) {
+            super.onPostExecute(json);
+
+            Map<String, String> url;
+            Type type = new TypeToken<Map<String, String>>() {}.getType();
+            url = new Gson().fromJson(json, type);
+
+            System.out.println(url);
+
+            if (!url.get("url").contains("null.")) {
+                new DownloadImageTask((ImageView) drawer.findViewById(R.id.user_picture))
+                        .execute(url.get("url"));
+            }
+        }
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urlDisplay = urls[0];
+            Bitmap bm = null;
+
+            try {
+                InputStream in = new java.net.URL(urlDisplay).openStream();
+                bm = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return bm;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 
     public void loadSingleProjectFragment(String scolaryear, String codemodule, String codeinstance, String codeacti) {
