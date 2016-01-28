@@ -199,6 +199,7 @@ public class MainActivity extends AppCompatActivity
             String infos = user.getInternal_email() + "\n" +
                     "GPA: " + user.getGpa().get(0).get("gpa") + "\n" +
                     "Credits: " + user.getCredits().toString() + "\n" +
+                    "Spices: " + user.getSpice().get("available_spice") + "\n" +
                     "Log time: " + user.getNsstat().get("active").toString() + "h" + "\n";
 
             userInfo.setText(infos);
