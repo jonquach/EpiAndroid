@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -150,6 +152,15 @@ public class LoginFragment extends Fragment {
                             public void run() {
                                 Toast.makeText(getActivity().getBaseContext(), "Login success", Toast.LENGTH_LONG).show();
                                 // End login fragment here call to profile view
+
+                                DrawerInfos di = new DrawerInfos((DrawerLayout) getActivity().findViewById(R.id.drawer_layout));
+                                di.setDrawerInfos();
+
+                                Fragment frag = new HomeFragment();
+
+                                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                                ft.replace(R.id.content_frame, frag);
+                                ft.commit();
                             }
                         });
                     }
