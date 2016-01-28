@@ -30,7 +30,6 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
-import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -163,12 +162,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private class Task extends AsyncTask<String, String, String> {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        ImageView userImg = (ImageView) drawer.findViewById(R.id.user_picture);
-        TextView username = (TextView) drawer.findViewById(R.id.user_name);
-        TextView userInfo = (TextView) drawer.findViewById(R.id.user_info);
-
         @Override
         protected String doInBackground(String... params) {
             UserData userData = UserData.getInstance();
@@ -176,7 +169,7 @@ public class MainActivity extends AppCompatActivity
             String token = userData.getToken();
 
             Request request = new Request.Builder()
-                    .url("http://epitech-api.herokuapp.com/photo?login=" + login + "&token=" + token)
+                    .url("http://epitech-api.herokuapp.com/user?user=" + login + "&token=" + token)
                     .get()
                     .build();
 
@@ -193,15 +186,26 @@ public class MainActivity extends AppCompatActivity
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
 
-            Map<String, String> url;
-            Type type = new TypeToken<Map<String, String>>() {}.getType();
-            url = new Gson().fromJson(json, type);
+            Type listType = new TypeToken<User>() {
+            }.getType();
+            User user = new Gson().fromJson(json, listType);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-            System.out.println(url);
+            ImageView userImg = (ImageView) drawer.findViewById(R.id.user_picture);
+            TextView username = (TextView) drawer.findViewById(R.id.user_name);
+            TextView userInfo = (TextView) drawer.findViewById(R.id.user_info);
 
-            if (!url.get("url").contains("null.")) {
+            username.setText(user.getFullName());
+            String infos = user.getInternal_email() + "\n" +
+                    "GPA: " + user.getGpa().get(0).get("gpa") + "\n" +
+                    "Credits: " + user.getCredits().toString() + "\n" +
+                    "Log time: " + user.getNsstat().get("active").toString() + "h" + "\n";
+
+            userInfo.setText(infos);
+
+            if (!user.getPicture().contains("null.")) {
                 new DownloadImageTask((ImageView) drawer.findViewById(R.id.user_picture))
-                        .execute(url.get("url"));
+                        .execute(user.getPicture());
             }
         }
     }
