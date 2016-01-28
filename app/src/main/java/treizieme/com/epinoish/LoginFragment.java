@@ -56,6 +56,15 @@ public class LoginFragment extends Fragment {
         // Login btn listener
         btnLogin = (Button) view.findViewById(R.id.btn_login);
 
+        SharedPreferences sharedPref = getActivity().getPreferences(0);
+        String tmp;
+
+        if ((tmp = sharedPref.getString("login", null)) != null) {
+            login.setText(tmp);
+        } else if ((tmp = sharedPref.getString("password", null)) != null) {
+            password.setText(tmp);
+        }
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +135,8 @@ public class LoginFragment extends Fragment {
                             SharedPreferences sharedPref = getActivity().getPreferences(0);
                             SharedPreferences.Editor editor = sharedPref.edit();
 
+                            editor.putString("login", userData.getLogin());
+                            editor.putString("password", userData.getPassword());
                             editor.putString("token", userData.getToken());
                             editor.apply();
 
