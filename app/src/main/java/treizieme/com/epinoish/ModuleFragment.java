@@ -49,6 +49,7 @@ public class ModuleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_module, container, false);
+        ((MainActivity) getActivity()).setToolbarTitle("Modules");
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Loading...");

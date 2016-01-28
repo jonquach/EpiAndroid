@@ -39,12 +39,14 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private final OkHttpClient client = new OkHttpClient();
+    Toolbar toolbar = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity
             }
 
             Fragment frag = new HomeFragment();
-
+            toolbar.setTitle("Home");
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.content_frame, frag);
             ft.commit();
@@ -201,7 +203,7 @@ public class MainActivity extends AppCompatActivity
                     "Credits: " + user.getCredits().toString() + "\n" +
                     "Spices: " + user.getSpice().get("available_spice") + "\n" +
                     "Log time: " + user.getNsstat().get("active").toString() + "h" + "\n";
-
+            System.out.println(user.getNsstat().toString());
             userInfo.setText(infos);
 
             if (!user.getPicture().contains("null.")) {
@@ -277,5 +279,9 @@ public class MainActivity extends AppCompatActivity
         ft.replace(R.id.content_frame, fragInfo);
         ft.addToBackStack(null);
         ft.commit();
+    }
+
+    public void setToolbarTitle(String title) {
+        toolbar.setTitle(title);
     }
 }

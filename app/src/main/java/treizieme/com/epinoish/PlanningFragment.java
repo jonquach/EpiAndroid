@@ -52,6 +52,7 @@ public class PlanningFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_planning, container, false);
+        ((MainActivity) getActivity()).setToolbarTitle("Planning");
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Loading...");

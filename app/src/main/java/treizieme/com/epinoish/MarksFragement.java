@@ -49,6 +49,7 @@ public class MarksFragement extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_marks, container, false);
+        ((MainActivity) getActivity()).setToolbarTitle("Marks");
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Loading...");

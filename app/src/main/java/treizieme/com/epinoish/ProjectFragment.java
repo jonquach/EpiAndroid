@@ -49,6 +49,7 @@ public class ProjectFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_project, container, false);
+        ((MainActivity) getActivity()).setToolbarTitle("Projects");
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Loading...");

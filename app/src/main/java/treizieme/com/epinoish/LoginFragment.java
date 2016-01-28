@@ -49,6 +49,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+        ((MainActivity) getActivity()).setToolbarTitle("Login");
 
         login = (EditText) view.findViewById(R.id.input_login);
         password = (EditText) view.findViewById(R.id.input_password);
