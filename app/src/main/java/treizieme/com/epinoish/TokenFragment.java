@@ -1,6 +1,7 @@
 package treizieme.com.epinoish;
 
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ public class TokenFragment extends Fragment {
     String codemodule = null;
     String codeevent = null;
     String tokencode = null;
+    private ProgressDialog progressDialog;
 
     public TokenFragment() {
         // Required empty public constructor
@@ -62,6 +64,10 @@ public class TokenFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (token.getText().length() == 8) {
+                    progressDialog = new ProgressDialog(getActivity());
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setMessage("Loading...");
+                    progressDialog.show();
                     tokencode = token.getText().toString();
                     new Task().execute();
                 }
@@ -95,6 +101,8 @@ public class TokenFragment extends Fragment {
             try {
                 Response response = client.newCall(request).execute();
                 System.out.println(response.body().string());
+                progressDialog.dismiss();
+                ((MainActivity) getActivity()).loadPlanningFragment();
                 return null;
             } catch (IOException e) {
                 e.printStackTrace();

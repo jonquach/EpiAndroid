@@ -190,4 +190,12 @@ public class MainActivity extends AppCompatActivity
     public void setToolbarTitle(String title) {
         toolbar.setTitle(title);
     }
+
+    public void loadPlanningFragment() {
+        PlanningFragment fragInfo = new PlanningFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragInfo);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
 }
