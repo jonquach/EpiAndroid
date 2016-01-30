@@ -6,13 +6,19 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -39,6 +45,7 @@ public class PlanningFragment extends Fragment {
     private ProgressDialog progressDialog;
     ListView listEvents;
     Spinner spinner;
+    EditText searchBar;
     List<Planning> events = new ArrayList<>();
     PlanningAdapter adapter = null;
 
@@ -72,6 +79,7 @@ public class PlanningFragment extends Fragment {
                         clicked.getCodeevent());
             }
         });
+        searchBar = (EditText) view.findViewById(R.id.planning_search);
         adapter = new PlanningAdapter(getActivity(), events);
         spinner = (Spinner) view.findViewById(R.id.planning_semester_spinner);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
@@ -133,12 +141,30 @@ public class PlanningFragment extends Fragment {
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    adapter.setFilteredItem(false);
                     adapter.getFilter().filter(spinner.getSelectedItem().toString());
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
 
+                }
+            });
+            searchBar.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    adapter.setFilteredItem(true);
+                    adapter.getFilter().filter(s.toString());
                 }
             });
         }
