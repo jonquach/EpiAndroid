@@ -53,4 +53,7 @@
     <string name="planning_submit_token">Submit token</string>
     <string name="planning_search">Search</string>
 
+    <string name="all_modules_registered">Registered:</string>
+    <string name="all_modules_status">Status:</string>
+
 </resources>
