@@ -78,8 +78,7 @@ public class AllModulesFragment extends Fragment {
 
         @Override
         protected JsonObject doInBackground(String... params) {
-            SharedPreferences prefs = getActivity().getPreferences(0);
-            String token = prefs.getString("token", "empty");
+            String token = UserData.getInstance().getToken();
 
             Request request = new Request.Builder()
                     .url("http://epitech-api.herokuapp.com/allmodules?token=" + token
@@ -90,8 +89,11 @@ public class AllModulesFragment extends Fragment {
 
             try {
                 Response response = client.newCall(request).execute();
-                jsonModules = new JsonParser().parse(response.body().string()).getAsJsonObject();
-                return jsonModules;
+                if (response.code() == 200) {
+                    jsonModules = new JsonParser().parse(response.body().string()).getAsJsonObject();
+                    return jsonModules;
+                }
+                return null;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -101,28 +103,29 @@ public class AllModulesFragment extends Fragment {
         @Override
         protected void onPostExecute(JsonObject json) {
             super.onPostExecute(json);
-            Type listType = new TypeToken<List<AllModules>>() {}.getType();
-            modules = new Gson().fromJson(json.get("items"), listType);
-            adapter = new AllModulesAdapter(getActivity(), modules);
-            listModules.setAdapter(adapter);
-            progressDialog.dismiss();
-            searchBar.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            if (json != null) {
+                Type listType = new TypeToken<List<AllModules>>() {}.getType();
+                modules = new Gson().fromJson(json.get("items"), listType);
+                adapter = new AllModulesAdapter(getActivity(), modules);
+                listModules.setAdapter(adapter);
+                progressDialog.dismiss();
+                searchBar.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                }
+                    }
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                }
+                    }
 
-                @Override
-                public void afterTextChanged(Editable s) {
-                    adapter.getFilter().filter(s.toString());
-                }
-            });
-
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        adapter.getFilter().filter(s.toString());
+                    }
+                });
+            }
         }
     }
 
