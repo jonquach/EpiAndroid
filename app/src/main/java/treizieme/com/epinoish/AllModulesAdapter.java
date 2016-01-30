@@ -57,8 +57,8 @@ public class AllModulesAdapter extends BaseAdapter implements Filterable {
         TextView module_registered = (TextView)layoutItem.findViewById(R.id.all_modules_registered);
 
         module_title.setText(mListAllModulesFiltered.get(position).getTitle());
-        module_status.setText(mListAllModulesFiltered.get(position).getSemester());
-        module_registered.setText(mListAllModulesFiltered.get(position).getStatus());
+        module_status.setText(mListAllModulesFiltered.get(position).getStatus());
+        module_registered.setText(mListAllModulesFiltered.get(position).getEnd_register());
         return layoutItem;
     }
 
