@@ -71,7 +71,7 @@ public class ModuleAdapter extends BaseAdapter implements Filterable{
 
                 if (constraint == null || constraint.length() == 0) {
                     results.values = mListModule;
-                    results.values = mListModule.size();
+                    results.count = mListModule.size();
                 } else {
                     ArrayList<Module> filterResultsData = new ArrayList<>();
                     for (Module item : mListModule) {

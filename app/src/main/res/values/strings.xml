@@ -51,5 +51,6 @@
     <string name="planning_lbl_room">Room: </string>
     <string name="planning_hint_token">Token</string>
     <string name="planning_submit_token">Submit token</string>
+    <string name="planning_search">Search</string>
 
 </resources>

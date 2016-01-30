@@ -19,12 +19,14 @@ public class PlanningAdapter extends BaseAdapter implements Filterable {
     private List<Planning> mListPlanningFiltered;
     private Context mContext;
     private LayoutInflater mInflater;
+    private Boolean filteredItem;
 
     public PlanningAdapter(Context context, List<Planning> aListPlanning) {
         mContext = context;
         mListPlanning = aListPlanning;
         mListPlanningFiltered = aListPlanning;
         mInflater = LayoutInflater.from(mContext);
+        filteredItem = false;
     }
 
     @Override
@@ -79,22 +81,31 @@ public class PlanningAdapter extends BaseAdapter implements Filterable {
         return layoutItem;
     }
 
+    public void setFilteredItem(Boolean item) {
+        filteredItem = item;
+    }
+
     @Override
     public Filter getFilter() {
         return new Filter() {
-
             @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                FilterResults results = new FilterResults();
+            protected Filter.FilterResults performFiltering(CharSequence constraint) {
+                Filter.FilterResults results = new Filter.FilterResults();
 
                 if (constraint == null || constraint.length() == 0) {
                     results.values = mListPlanning;
-                    results.values = mListPlanning.size();
+                    results.count = mListPlanning.size();
                 } else {
                     ArrayList<Planning> filterResultsData = new ArrayList<>();
                     for (Planning item : mListPlanning) {
-                        if (item.getSemester().toString().equals(constraint)) {
-                            filterResultsData.add(item);
+                        if (!filteredItem) {
+                            if (item.getSemester().toString().equals(constraint)) {
+                                filterResultsData.add(item);
+                            }
+                        } else {
+                            if (item.getActi_title().toLowerCase().contains(constraint.toString().toLowerCase())) {
+                                filterResultsData.add(item);
+                            }
                         }
                     }
                     results.values = filterResultsData;
@@ -105,7 +116,7 @@ public class PlanningAdapter extends BaseAdapter implements Filterable {
 
             @Override
             @SuppressWarnings("unchecked")
-            protected void publishResults(CharSequence constraint, FilterResults results) {
+            protected void publishResults(CharSequence constraint, Filter.FilterResults results) {
                 mListPlanningFiltered = (List<Planning>) results.values;
                 notifyDataSetChanged();
             }
