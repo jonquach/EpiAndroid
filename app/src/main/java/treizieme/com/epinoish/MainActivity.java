@@ -130,6 +130,8 @@ public class MainActivity extends AppCompatActivity
             frag = new MarksFragement();
         } else if (id == R.id.nav_home_frag) {
             frag = new HomeFragment();
+        } else if (id == R.id.nav_all_modules_frag) {
+            frag = new AllModulesFragment();
         }
 
         if (frag != null) {

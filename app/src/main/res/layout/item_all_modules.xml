@@ -4,6 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:textAppearance="?android:textAppearanceLarge"
         android:id="@+id/all_modules_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -14,11 +15,13 @@
         android:orientation="horizontal">
 
         <TextView
+            android:textAppearance="?android:textAppearanceMedium"
             android:text="@string/all_modules_registered"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
+            android:textAppearance="?android:textAppearanceMedium"
             android:id="@+id/all_modules_registered"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -31,11 +34,13 @@
         android:orientation="horizontal">
 
         <TextView
+            android:textAppearance="?android:textAppearanceMedium"
             android:text="@string/all_modules_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
+            android:textAppearance="?android:textAppearanceMedium"
             android:id="@+id/all_modules_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

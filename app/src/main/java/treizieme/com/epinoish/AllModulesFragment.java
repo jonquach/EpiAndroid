@@ -57,13 +57,14 @@ public class AllModulesFragment extends Fragment {
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
-        listModules = (ListView) view.findViewById(R.id.list_modules);
+        searchBar = (EditText) view.findViewById(R.id.all_modules_search);
+        listModules = (ListView) view.findViewById(R.id.list_all_modules);
         listModules.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Module clicked = (Module) listModules.getItemAtPosition(position);
+                AllModules clicked = (AllModules) listModules.getItemAtPosition(position);
                 ((MainActivity) getActivity()).loadSingleModuleFragment((new Integer(clicked.getScolaryear())).toString(),
-                        clicked.getCodemodule(),
+                        clicked.getCode(),
                         clicked.getCodeinstance());
             }
         });
