@@ -1,16 +1,12 @@
 package treizieme.com.epinoish;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.net.Uri;
-import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -55,9 +51,14 @@ public class MarksFragement extends Fragment {
         progressDialog.setMessage("Loading...");
         progressDialog.show();
         listMarks = (ListView) view.findViewById(R.id.list_marks);
-
         adapter = new MarksAdapter(getActivity(), marks);
-        new Task().execute();
+
+        if (UserData.getInstance().getToken() != null) {
+            new Task().execute();
+        } else {
+            progressDialog.dismiss();
+        }
+
         return view;
     }
 
@@ -67,8 +68,7 @@ public class MarksFragement extends Fragment {
 
         @Override
         protected JsonObject doInBackground(String... params) {
-            SharedPreferences prefs = getActivity().getPreferences(0);
-            String token = prefs.getString("token", "empty");
+            String token = UserData.getInstance().getToken();
 
             Request request = new Request.Builder()
                     .url("http://epitech-api.herokuapp.com/marks?token=" + token)
@@ -77,9 +77,11 @@ public class MarksFragement extends Fragment {
 
             try {
                 Response response = client.newCall(request).execute();
-                jsonModules = new JsonParser().parse(response.body().string()).getAsJsonObject();
-                System.out.println(jsonModules);
-                return jsonModules;
+
+                if (response.code() == 200) {
+                    jsonModules = new JsonParser().parse(response.body().string()).getAsJsonObject();
+                    return jsonModules;
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -89,11 +91,14 @@ public class MarksFragement extends Fragment {
         @Override
         protected void onPostExecute(JsonObject json) {
             super.onPostExecute(json);
-            Type listType = new TypeToken<List<Marks>>() {}.getType();
-            marks = new Gson().fromJson(json.get("notes"), listType);
-            adapter = new MarksAdapter(getActivity(), marks);
-            listMarks.setAdapter(adapter);
-            progressDialog.dismiss();
+
+            if (json != null) {
+                Type listType = new TypeToken<List<Marks>>() {}.getType();
+                marks = new Gson().fromJson(json.get("notes"), listType);
+                adapter = new MarksAdapter(getActivity(), marks);
+                listMarks.setAdapter(adapter);
+                progressDialog.dismiss();
+            }
         }
     }
 

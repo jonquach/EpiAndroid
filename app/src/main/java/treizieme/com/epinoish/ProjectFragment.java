@@ -2,7 +2,6 @@ package treizieme.com.epinoish;
 
 
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,8 +15,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
@@ -70,9 +67,15 @@ public class ProjectFragment extends Fragment {
                         clicked.getCodeacti());
             }
         });
-        Bundle bundle = this.getArguments();
-        registered = bundle.getInt("registered");
-        new Task().execute();
+
+        if (UserData.getInstance().getToken() != null) {
+            Bundle bundle = this.getArguments();
+            registered = bundle.getInt("registered");
+            new Task().execute();
+        } else {
+            progressDialog.dismiss();
+        }
+
         return view;
     }
 
@@ -80,8 +83,7 @@ public class ProjectFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... params) {
-            SharedPreferences prefs = getActivity().getPreferences(0);
-            String token = prefs.getString("token", "empty");
+            String token = UserData.getInstance().getToken();
 
             Request request = new Request.Builder()
                     .url("http://epitech-api.herokuapp.com/projects?token=" + token)
@@ -90,7 +92,11 @@ public class ProjectFragment extends Fragment {
 
             try {
                 Response response = client.newCall(request).execute();
-                return response.body().string();
+
+                if (response.code() == 200) {
+                    return response.body().string();
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -100,32 +106,36 @@ public class ProjectFragment extends Fragment {
         @Override
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
-            Type listType = new TypeToken<List<Project>>() {}.getType();
-            projects = new Gson().fromJson(json, listType);
-            progressDialog.dismiss();
-            adapter = new ProjectAdapter(getActivity(), projects);
-            listProjects.setAdapter(adapter);
-            if (registered == 1) {
-                adapter.setItemTarget(false);
-                adapter.getFilter().filter("1");
+
+            if (json != null) {
+                Type listType = new TypeToken<List<Project>>() {
+                }.getType();
+                projects = new Gson().fromJson(json, listType);
+                progressDialog.dismiss();
+                adapter = new ProjectAdapter(getActivity(), projects);
+                listProjects.setAdapter(adapter);
+                if (registered == 1) {
+                    adapter.setItemTarget(false);
+                    adapter.getFilter().filter("1");
+                }
+                searchBar.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        adapter.setItemTarget(true);
+                        adapter.getFilter().filter(s.toString());
+                    }
+                });
             }
-            searchBar.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    adapter.setItemTarget(true);
-                    adapter.getFilter().filter(s.toString());
-                }
-            });
         }
     }
 }

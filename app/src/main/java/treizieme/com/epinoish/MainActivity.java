@@ -21,6 +21,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    UserData userData = UserData.getInstance();
     Toolbar toolbar = null;
 
     @Override
@@ -41,13 +42,37 @@ public class MainActivity extends AppCompatActivity
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                MenuItem item = ((NavigationView) findViewById(R.id.nav_view)).getMenu()
+                        .findItem(R.id.nav_login_frag);
+
+                if (userData.getToken() != null) {
+                    item.setTitle("Logout");
+                } else {
+                    item.setTitle("Login");
+                }
+            }
+
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                MenuItem item = ((NavigationView) findViewById(R.id.nav_view)).getMenu()
+                        .findItem(R.id.nav_login_frag);
+
+                if (userData.getToken() != null) {
+                    item.setTitle("Logout");
+                } else {
+                    item.setTitle("Login");
+                }
+            }
+        };
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
 
         SharedPreferences sharedPref = getPreferences(0);
         if (sharedPref.getString("token", "failed").equals("failed")) {
@@ -57,7 +82,6 @@ public class MainActivity extends AppCompatActivity
             ft.replace(R.id.content_frame, frag);
             ft.commit();
         } else {
-            UserData userData = UserData.getInstance();
             userData.setLogin(sharedPref.getString("login", null));
             userData.setPassword(sharedPref.getString("password", null));
             userData.setToken(sharedPref.getString("token", null));
@@ -111,7 +135,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.

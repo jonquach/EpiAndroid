@@ -2,7 +2,6 @@ package treizieme.com.epinoish;
 
 
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -67,12 +66,18 @@ public class ModuleFragment extends Fragment {
         adapter = new ModuleAdapter(getActivity(), modules);
         spinner = (Spinner) view.findViewById(R.id.module_semester_spinner);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
-                                                                    R.array.module_semester_spinner_array,
-                                                                    android.R.layout.simple_spinner_item);
+                R.array.module_semester_spinner_array,
+                android.R.layout.simple_spinner_item);
 
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
-        new Task().execute();
+
+        if (UserData.getInstance().getToken() != null) {
+            new Task().execute();
+        } else {
+            progressDialog.dismiss();
+        }
+
         return view;
     }
 
@@ -82,8 +87,7 @@ public class ModuleFragment extends Fragment {
 
         @Override
         protected JsonObject doInBackground(String... params) {
-            SharedPreferences prefs = getActivity().getPreferences(0);
-            String token = prefs.getString("token", "empty");
+            String token = UserData.getInstance().getToken();
 
             Request request = new Request.Builder()
                     .url("http://epitech-api.herokuapp.com/modules?token=" + token)
@@ -92,8 +96,11 @@ public class ModuleFragment extends Fragment {
 
             try {
                 Response response = client.newCall(request).execute();
-                jsonModules = new JsonParser().parse(response.body().string()).getAsJsonObject();
-                return jsonModules;
+
+                if (response.code() == 200) {
+                    jsonModules = new JsonParser().parse(response.body().string()).getAsJsonObject();
+                    return jsonModules;
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -103,23 +110,25 @@ public class ModuleFragment extends Fragment {
         @Override
         protected void onPostExecute(JsonObject json) {
             super.onPostExecute(json);
-            Type listType = new TypeToken<List<Module>>() {}.getType();
-            modules = new Gson().fromJson(json.get("modules"), listType);
-            adapter = new ModuleAdapter(getActivity(), modules);
-            listModules.setAdapter(adapter);
-            progressDialog.dismiss();
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    adapter.getFilter().filter(spinner.getSelectedItem().toString());
-                }
 
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
+            if (json != null) {
+                Type listType = new TypeToken<List<Module>>() {}.getType();
+                modules = new Gson().fromJson(json.get("modules"), listType);
+                adapter = new ModuleAdapter(getActivity(), modules);
+                listModules.setAdapter(adapter);
+                progressDialog.dismiss();
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        adapter.getFilter().filter(spinner.getSelectedItem().toString());
+                    }
 
-                }
-            });
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
 
+                    }
+                });
+            }
         }
     }
 }

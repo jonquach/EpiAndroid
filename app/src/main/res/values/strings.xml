@@ -7,6 +7,8 @@
     <string name="login">Login</string>
     <string name="modules">My Modules</string>
     <string name="projects">My Projects</string>
+    <string name="logout">Logout</string>
+    <string name="push_to_logout">Press button to logout</string>
     <string name="planning">Planning</string>
     <string name="marks">Marks</string>
     <string name="title_activity_main_page">MainPage</string>

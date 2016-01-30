@@ -1,7 +1,6 @@
 package treizieme.com.epinoish;
 
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -48,7 +47,12 @@ public class HomeFragment extends Fragment {
         progressDialog.show();
         msgList = (ListView) view.findViewById(R.id.message_list);
         adapter = new MessageAdapter(getActivity(), msg);
-        new Task().execute();
+
+        if (UserData.getInstance().getToken() != null) {
+            new Task().execute();
+        } else {
+            progressDialog.dismiss();
+        }
         return view;
     }
 
@@ -56,8 +60,7 @@ public class HomeFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... params) {
-            SharedPreferences prefs = getActivity().getPreferences(0);
-            String token = prefs.getString("token", "empty");
+            String token = UserData.getInstance().getToken();
 
             Request request = new Request.Builder()
                     .url("http://epitech-api.herokuapp.com/messages?token=" + token)
@@ -66,7 +69,10 @@ public class HomeFragment extends Fragment {
 
             try {
                 Response response = client.newCall(request).execute();
-                return response.body().string();
+                if (response.code() == 200) {
+                    return response.body().string();
+                }
+                return null;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -76,11 +82,14 @@ public class HomeFragment extends Fragment {
         @Override
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
-            Type listType = new TypeToken<List<Message>>() {}.getType();
-            msg = new Gson().fromJson(json, listType);
-            adapter = new MessageAdapter(getActivity(), msg);
-            msgList.setAdapter(adapter);
-            progressDialog.dismiss();
+
+            if (json != null) {
+                Type listType = new TypeToken<List<Message>>() {}.getType();
+                msg = new Gson().fromJson(json, listType);
+                adapter = new MessageAdapter(getActivity(), msg);
+                msgList.setAdapter(adapter);
+                progressDialog.dismiss();
+            }
         }
     }
 }
