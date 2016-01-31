@@ -1,11 +1,11 @@
 package treizieme.com.epinoish;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
@@ -71,12 +71,16 @@ public class PlanningAdapter extends BaseAdapter implements Filterable {
             planning_token.setVisibility(View.VISIBLE);
         }
         planning_title.setText(mListPlanningFiltered.get(position).getActi_title());
+        planning_title.setTextColor(ContextCompat.getColor(mContext, R.color.purple));
         planning_date.setText(mListPlanningFiltered.get(position).getStart().split(" ")[0]);
+        planning_start.setTextColor(ContextCompat.getColor(mContext, R.color.green));
         planning_start.setText(mListPlanningFiltered.get(position).getStart().split(" ")[1]);
+        planning_end.setTextColor(ContextCompat.getColor(mContext, R.color.red));
         planning_end.setText(mListPlanningFiltered.get(position).getEnd().split(" ")[1]);
-        if (mListPlanningFiltered.get(position).room != null)
+        planning_room.setTextColor(ContextCompat.getColor(mContext, R.color.orange));
+        if (mListPlanningFiltered.get(position).room != null) {
             planning_room.setText(mListPlanningFiltered.get(position).room.get("code"));
-        else
+        } else
             planning_room.setText("-");
         return layoutItem;
     }

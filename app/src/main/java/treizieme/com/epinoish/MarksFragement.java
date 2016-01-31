@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.Spinner;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
@@ -93,11 +95,17 @@ public class MarksFragement extends Fragment {
             super.onPostExecute(json);
 
             if (json != null) {
-                Type listType = new TypeToken<List<Marks>>() {}.getType();
-                marks = new Gson().fromJson(json.get("notes"), listType);
-                adapter = new MarksAdapter(getActivity(), marks);
-                listMarks.setAdapter(adapter);
-                progressDialog.dismiss();
+                try {
+                    Type listType = new TypeToken<List<Marks>>() {
+                    }.getType();
+                    marks = new Gson().fromJson(json.get("notes"), listType);
+                    adapter = new MarksAdapter(getActivity(), marks);
+                    listMarks.setAdapter(adapter);
+                    progressDialog.dismiss();
+                } catch (JsonParseException e) {
+                    Log.e("Error", e.getMessage());
+                    e.printStackTrace();
+                }
             }
         }
     }

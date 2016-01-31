@@ -1,6 +1,7 @@
 package treizieme.com.epinoish;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +58,24 @@ public class AllModulesAdapter extends BaseAdapter implements Filterable {
         TextView module_registered = (TextView)layoutItem.findViewById(R.id.all_modules_registered);
 
         module_title.setText(mListAllModulesFiltered.get(position).getTitle());
-        module_status.setText(mListAllModulesFiltered.get(position).getStatus());
+
+        String status = mListAllModulesFiltered.get(position).getStatus();
+
+        if (status.equals("valid")) {
+            module_status.setTextColor(ContextCompat.getColor(mContext, R.color.green));
+        } else if (status.equals("fail")) {
+            module_status.setTextColor(ContextCompat.getColor(mContext, R.color.red));
+        } else if (status.equals("ongoing")) {
+            module_status.setTextColor(ContextCompat.getColor(mContext, R.color.blue));
+        } else if (status.equals("notregistered")) {
+            module_status.setTextColor(ContextCompat.getColor(mContext, R.color.purple));
+        } else {
+            module_status.setTextColor(ContextCompat.getColor(mContext, R.color.hot_pink));
+        }
+
+        status = " " + status;
+
+        module_status.setText(status);
         module_registered.setText(mListAllModulesFiltered.get(position).getEnd_register());
         return layoutItem;
     }

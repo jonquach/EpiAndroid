@@ -4,28 +4,42 @@
     android:layout_height="match_parent"
     tools:context="treizieme.com.epinoish.ModuleFragment">
 
-    <include layout="@layout/content_module"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_height="432dp"
-        android:layout_width="match_parent"/>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="461dp"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize">
 
         <TextView
+            android:id="@+id/module_spinner_text"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="@string/module_semester"
-            />
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/module_semester" />
 
         <Spinner
+            android:id="@+id/module_semester_spinner"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:id="@+id/module_semester_spinner" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_toRightOf="@+id/module_spinner_text" />
+
+        <include
+            android:id="@+id/module_include"
+            layout="@layout/content_module"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/module_semester_spinner"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp" />
+
+    </RelativeLayout>
 
 
 </FrameLayout>

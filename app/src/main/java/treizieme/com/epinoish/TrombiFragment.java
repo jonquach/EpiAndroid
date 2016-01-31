@@ -88,7 +88,7 @@ public class TrombiFragment extends Fragment {
                 view.findViewById(R.id.trombi_user_not_found).setVisibility(View.GONE);
 
                 if (login.getText() != null && !login.getText().toString().equals("")) {
-                    loginSearch = login.getText().toString();
+                    loginSearch = login.getText().toString().toLowerCase();
 
                     view.findViewById(R.id.trombi_user).setVisibility(View.VISIBLE);
                     view.findViewById(R.id.trombi_grid_include).setVisibility(View.GONE);
@@ -244,12 +244,17 @@ public class TrombiFragment extends Fragment {
             super.onPostExecute(json);
 
             if (json != null) {
-                Type listType = new TypeToken<List<Trombi>>() {
-                }.getType();
-                trombi = new Gson().fromJson(json.get("items"), listType);
-                adapter = new TrombiAdapter(getActivity(), trombi);
-                gridView.setAdapter(adapter);
-                progressDialog.dismiss();
+                try {
+                    Type listType = new TypeToken<List<Trombi>>() {
+                    }.getType();
+                    trombi = new Gson().fromJson(json.get("items"), listType);
+                    adapter = new TrombiAdapter(getActivity(), trombi);
+                    gridView.setAdapter(adapter);
+                    progressDialog.dismiss();
+                } catch (JsonParseException e) {
+                    Log.e("Error", e.getMessage());
+                    e.printStackTrace();
+                }
             }
         }
     }

@@ -4,11 +4,22 @@
     android:layout_height="match_parent"
     tools:context="treizieme.com.epinoish.AllModulesFragment">
 
-    <include layout="@layout/content_all_modules"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_height="505dp"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        >
-    </include>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <include
+            layout="@layout/content_all_modules"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp" />
+
+    </RelativeLayout>
 
 </FrameLayout>

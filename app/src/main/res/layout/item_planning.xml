@@ -1,71 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
-        android:textAppearance="?android:textAppearanceLarge"
         android:id="@+id/planning_date"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
-        android:textAppearance="?android:textAppearanceMedium"
         android:id="@+id/planning_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="16sp" />
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
-            android:textAppearance="?android:textAppearanceSmall"
             android:id="@+id/planning_start"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="14sp" />
 
         <TextView
-            android:text="@string/project_hyphen"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/project_hyphen" />
 
         <TextView
-            android:textAppearance="?android:textAppearanceSmall"
             android:id="@+id/planning_end"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="14sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
-            android:textAppearance="?android:textAppearanceSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/planning_lbl_room"/>
+            android:text="@string/planning_lbl_room"
+            android:textSize="14sp" />
 
         <TextView
-            android:textAppearance="?android:textAppearanceSmall"
             android:id="@+id/planning_room"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="14sp" />
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/planning_token"
-        android:visibility="gone"
-        android:textColor="@color/colorPrimaryDark"
-        android:textAppearance="?android:textAppearanceMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/single_project_token"
-        />
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
 </LinearLayout>

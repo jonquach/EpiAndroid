@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.Spinner;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
@@ -112,22 +114,28 @@ public class ModuleFragment extends Fragment {
             super.onPostExecute(json);
 
             if (json != null) {
-                Type listType = new TypeToken<List<Module>>() {}.getType();
-                modules = new Gson().fromJson(json.get("modules"), listType);
-                adapter = new ModuleAdapter(getActivity(), modules);
-                listModules.setAdapter(adapter);
-                progressDialog.dismiss();
-                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        adapter.getFilter().filter(spinner.getSelectedItem().toString());
-                    }
+                try {
+                    Type listType = new TypeToken<List<Module>>() {
+                    }.getType();
+                    modules = new Gson().fromJson(json.get("modules"), listType);
+                    adapter = new ModuleAdapter(getActivity(), modules);
+                    listModules.setAdapter(adapter);
+                    progressDialog.dismiss();
+                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            adapter.getFilter().filter(spinner.getSelectedItem().toString());
+                        }
 
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
 
-                    }
-                });
+                        }
+                    });
+                } catch (JsonParseException e) {
+                    Log.e("Error", e.getMessage());
+                    e.printStackTrace();
+                }
             }
         }
     }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
@@ -108,33 +110,38 @@ public class ProjectFragment extends Fragment {
             super.onPostExecute(json);
 
             if (json != null) {
-                Type listType = new TypeToken<List<Project>>() {
-                }.getType();
-                projects = new Gson().fromJson(json, listType);
-                progressDialog.dismiss();
-                adapter = new ProjectAdapter(getActivity(), projects);
-                listProjects.setAdapter(adapter);
-                if (registered == 1) {
-                    adapter.setItemTarget(false);
-                    adapter.getFilter().filter("1");
+                try {
+                    Type listType = new TypeToken<List<Project>>() {
+                    }.getType();
+                    projects = new Gson().fromJson(json, listType);
+                    progressDialog.dismiss();
+                    adapter = new ProjectAdapter(getActivity(), projects);
+                    listProjects.setAdapter(adapter);
+                    if (registered == 1) {
+                        adapter.setItemTarget(false);
+                        adapter.getFilter().filter("1");
+                    }
+                    searchBar.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            adapter.setItemTarget(true);
+                            adapter.getFilter().filter(s.toString());
+                        }
+                    });
+                } catch (JsonParseException e) {
+                    Log.e("Error", e.getMessage());
+                    e.printStackTrace();
                 }
-                searchBar.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        adapter.setItemTarget(true);
-                        adapter.getFilter().filter(s.toString());
-                    }
-                });
             }
         }
     }

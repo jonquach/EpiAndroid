@@ -2,12 +2,12 @@ package treizieme.com.epinoish;
 
 
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +17,7 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
@@ -105,27 +106,33 @@ public class AllModulesFragment extends Fragment {
         protected void onPostExecute(JsonObject json) {
             super.onPostExecute(json);
             if (json != null) {
-                Type listType = new TypeToken<List<AllModules>>() {}.getType();
-                modules = new Gson().fromJson(json.get("items"), listType);
-                adapter = new AllModulesAdapter(getActivity(), modules);
-                listModules.setAdapter(adapter);
-                progressDialog.dismiss();
-                searchBar.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                try {
+                    Type listType = new TypeToken<List<AllModules>>() {
+                    }.getType();
+                    modules = new Gson().fromJson(json.get("items"), listType);
+                    adapter = new AllModulesAdapter(getActivity(), modules);
+                    listModules.setAdapter(adapter);
+                    progressDialog.dismiss();
+                    searchBar.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                    }
+                        }
 
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        adapter.getFilter().filter(s.toString());
-                    }
-                });
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            adapter.getFilter().filter(s.toString());
+                        }
+                    });
+                } catch (JsonParseException e) {
+                    Log.e("Error", e.getMessage());
+                    e.printStackTrace();
+                }
             }
         }
     }

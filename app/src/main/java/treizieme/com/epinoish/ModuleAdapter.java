@@ -1,6 +1,7 @@
 package treizieme.com.epinoish;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +58,24 @@ public class ModuleAdapter extends BaseAdapter implements Filterable{
         TextView module_semester = (TextView)layoutItem.findViewById(R.id.module_semester);
 
         module_title.setText(mListModuleFiltered.get(position).getTitle());
-        module_grade.setText(mListModuleFiltered.get(position).getGrade());
+
+        String grade = mListModuleFiltered.get(position).getGrade();
+
+        if (grade.equals("D") || grade.equals("Acquis")) {
+            module_grade.setTextColor(ContextCompat.getColor(mContext, R.color.purple));
+        } else if (grade.equals("C")) {
+            module_grade.setTextColor(ContextCompat.getColor(mContext, R.color.yellow));
+        } else if (grade.equals("B")) {
+            module_grade.setTextColor(ContextCompat.getColor(mContext, R.color.blue));
+        } else if (grade.equals("A")) {
+            module_grade.setTextColor(ContextCompat.getColor(mContext, R.color.green));
+        } else {
+            module_grade.setTextColor(ContextCompat.getColor(mContext, R.color.red));
+        }
+
+        grade = " " + grade;
+
+        module_grade.setText(grade);
         module_semester.setText(mListModuleFiltered.get(position).getSemester());
         return layoutItem;
     }

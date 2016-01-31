@@ -1,6 +1,7 @@
 package treizieme.com.epinoish;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,8 +58,18 @@ public class MarksAdapter extends BaseAdapter implements Filterable{
         TextView marks_notes = (TextView)layoutItem.findViewById(R.id.marks_notes);
 
         marks_title.setText(mListMarksFiltered.get(position).getTitle());
+        marks_titlemodule.setTextColor(ContextCompat.getColor(mContext, R.color.purple));
         marks_titlemodule.setText(mListMarksFiltered.get(position).getTitlemodule());
-        marks_notes.setText(mListMarksFiltered.get(position).getFinal_note());
+        String note = mListMarksFiltered.get(position).getFinal_note();
+
+        if (note.equals("0") || note.equals("-42")) {
+            marks_notes.setTextColor(ContextCompat.getColor(mContext, R.color.red));
+        } else {
+            marks_notes.setTextColor(ContextCompat.getColor(mContext, R.color.blue));
+        }
+
+        note = " " + note;
+        marks_notes.setText(note);
         return layoutItem;
     }
 

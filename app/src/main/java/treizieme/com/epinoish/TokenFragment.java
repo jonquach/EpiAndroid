@@ -97,7 +97,6 @@ public class TokenFragment extends Fragment {
 
             try {
                 Response response = client.newCall(request).execute();
-                System.out.println(response.body().string());
                 progressDialog.dismiss();
                 ((MainActivity) getActivity()).loadPlanningFragment();
                 return null;
