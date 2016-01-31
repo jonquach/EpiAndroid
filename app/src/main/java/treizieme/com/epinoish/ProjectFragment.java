@@ -6,10 +6,13 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -32,12 +35,13 @@ import okhttp3.Response;
  */
 public class ProjectFragment extends Fragment {
 
-
     private final OkHttpClient client = new OkHttpClient();
     ListView listProjects;
+    EditText searchBar;
     private ProgressDialog progressDialog;
     ArrayList<Project> projects = new ArrayList<>();
     ProjectAdapter adapter = null;
+    private int registered;
 
 
     public ProjectFragment() {
@@ -54,6 +58,7 @@ public class ProjectFragment extends Fragment {
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
+        searchBar = (EditText) view.findViewById(R.id.all_projects_search);
         listProjects = (ListView) view.findViewById(R.id.list_projects);
         listProjects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -65,6 +70,8 @@ public class ProjectFragment extends Fragment {
                         clicked.getCodeacti());
             }
         });
+        Bundle bundle = this.getArguments();
+        registered = bundle.getInt("registered");
         new Task().execute();
         return view;
     }
@@ -98,6 +105,27 @@ public class ProjectFragment extends Fragment {
             progressDialog.dismiss();
             adapter = new ProjectAdapter(getActivity(), projects);
             listProjects.setAdapter(adapter);
+            if (registered == 1) {
+                adapter.setItemTarget(false);
+                adapter.getFilter().filter("1");
+            }
+            searchBar.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    adapter.setItemTarget(true);
+                    adapter.getFilter().filter(s.toString());
+                }
+            });
         }
     }
 }

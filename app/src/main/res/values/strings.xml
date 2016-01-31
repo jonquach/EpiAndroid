@@ -6,7 +6,7 @@
     <string name="home">Home</string>
     <string name="login">Login</string>
     <string name="modules">My Modules</string>
-    <string name="projects">Projects</string>
+    <string name="projects">My Projects</string>
     <string name="planning">Planning</string>
     <string name="marks">Marks</string>
     <string name="title_activity_main_page">MainPage</string>
@@ -56,5 +56,7 @@
     <string name="all_modules_registered">End registration:</string>
     <string name="all_modules_status">Status:</string>
     <string name="all_modules">All Modules</string>
+
+    <string name="all_projects">All Projects</string>
 
 </resources>
