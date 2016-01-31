@@ -86,9 +86,9 @@ public class MarksAdapter extends BaseAdapter implements Filterable{
                 } else {
                     ArrayList<Marks> filterResultsData = new ArrayList<>();
                     for (Marks item : mListMarks) {
-                        //if (item.getSemester().equals(constraint)) {
+                        if (item.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())) {
                             filterResultsData.add(item);
-                       //}
+                        }
                     }
                     results.values = filterResultsData;
                     results.count = filterResultsData.size();

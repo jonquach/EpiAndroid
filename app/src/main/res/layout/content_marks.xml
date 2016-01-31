@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context="treizieme.com.epinoish.MarksFragment">
 
+    <EditText
+        android:id="@+id/marks_search"
+        android:layout_width="200dp"
+        android:layout_height="45dp" />
+
     <ListView
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/marks_search"
         android:id="@+id/list_marks"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </ListView>
 
-</LinearLayout>
+</RelativeLayout>
