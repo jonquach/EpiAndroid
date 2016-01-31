@@ -117,23 +117,31 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Fragment frag = null;
+        Bundle bundle = new Bundle();
 
         if (id == R.id.nav_login_frag) {
             frag = new LoginFragment();
         } else if (id == R.id.nav_modules_frag) {
             frag = new ModuleFragment();
         } else if (id == R.id.nav_projects_frag) {
+            bundle.putInt("registered", 1);
             frag = new ProjectFragment();
-        } else if (id == R.id.nav_planning_frag) {
+        } else if (id == R.id.nav_all_projects_frag) {
+            bundle.putInt("registered", 0);
+            frag = new ProjectFragment();
+        }  else if (id == R.id.nav_planning_frag) {
             frag = new PlanningFragment();
         } else if (id == R.id.nav_marks_frag) {
             frag = new MarksFragement();
         } else if (id == R.id.nav_home_frag) {
             frag = new HomeFragment();
+        } else if (id == R.id.nav_all_modules_frag) {
+            frag = new AllModulesFragment();
         }
 
         if (frag != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            frag.setArguments(bundle);
             ft.replace(R.id.content_frame, frag);
             ft.addToBackStack(null);
             ft.commit();

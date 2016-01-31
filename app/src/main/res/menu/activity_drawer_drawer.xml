@@ -5,7 +5,6 @@
         <item
             android:id="@+id/nav_home_frag"
             android:title="@string/home" />
-
         <item
             android:id="@+id/nav_login_frag"
             android:icon="@drawable/ic_menu_gallery"
@@ -14,18 +13,22 @@
             android:id="@+id/nav_modules_frag"
             android:title="@string/modules" />
         <item
+            android:id="@+id/nav_all_modules_frag"
+            android:title="@string/all_modules" />
+        <item
             android:id="@+id/nav_projects_frag"
             android:title="@string/projects" />
         <item
+            android:id="@+id/nav_all_projects_frag"
+            android:title="@string/all_projects" />
+        <item
             android:id="@+id/nav_planning_frag"
             android:title="@string/planning" />
-
         <item
             android:id="@+id/nav_marks_frag"
             android:title="@string/marks" />
-    </group>
 
-    <!-- TODO: REMOVE HARDCODED STRING HERE !!-->
+    </group>
 
     <item android:title="Communicate">
         <menu>
