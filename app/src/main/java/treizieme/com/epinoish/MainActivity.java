@@ -160,6 +160,8 @@ public class MainActivity extends AppCompatActivity
             frag = new HomeFragment();
         } else if (id == R.id.nav_all_modules_frag) {
             frag = new AllModulesFragment();
+        } else if (id == R.id.nav_trombi_frag) {
+            frag = new TrombiFragment();
         }
 
         if (frag != null) {

@@ -27,6 +27,9 @@
         <item
             android:id="@+id/nav_marks_frag"
             android:title="@string/marks" />
+        <item
+            android:id="@+id/nav_trombi_frag"
+            android:title="@string/trombi" />
     </group>
 
 </menu>
