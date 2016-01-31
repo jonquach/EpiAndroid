@@ -4,9 +4,9 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +23,6 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,6 +59,10 @@ public class MarksFragement extends Fragment {
         progressDialog.show();
         searchBar = (EditText) view.findViewById(R.id.marks_search);
         listMarks = (ListView) view.findViewById(R.id.list_marks);
+        if (getActivity() == null) {
+            progressDialog.dismiss();
+            return view;
+        }
         adapter = new MarksAdapter(getActivity(), marks);
 
         if (UserData.getInstance().getToken() != null) {
@@ -107,6 +110,9 @@ public class MarksFragement extends Fragment {
                     }.getType();
                     marks = new Gson().fromJson(json.get("notes"), listType);
                     Collections.reverse(marks);
+                    if (getActivity() == null) {
+                        return;
+                    }
                     adapter = new MarksAdapter(getActivity(), marks);
                     listMarks.setAdapter(adapter);
                     progressDialog.dismiss();

@@ -69,6 +69,8 @@ public class AllModulesFragment extends Fragment {
                         clicked.getCodeinstance());
             }
         });
+        if (getActivity() == null)
+            return view;
         adapter = new AllModulesAdapter(getActivity(), modules);
         new Task().execute();
         return view;
@@ -110,6 +112,8 @@ public class AllModulesFragment extends Fragment {
                     Type listType = new TypeToken<List<AllModules>>() {
                     }.getType();
                     modules = new Gson().fromJson(json.get("items"), listType);
+                    if (getActivity() == null)
+                        return;
                     adapter = new AllModulesAdapter(getActivity(), modules);
                     listModules.setAdapter(adapter);
                     progressDialog.dismiss();

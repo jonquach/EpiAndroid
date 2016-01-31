@@ -65,6 +65,9 @@ public class TrombiFragment extends Fragment {
         progressDialog.setMessage("Loading...");
         progressDialog.show();
         gridView = (GridView) view.findViewById(R.id.trombi_grid);
+        if (getActivity() == null) {
+            return view;
+        }
         adapter = new TrombiAdapter(getActivity(), trombi);
         spinnerLocation = (Spinner) view.findViewById(R.id.trombi_location_spinner);
         spinnerYear = (Spinner) view.findViewById(R.id.trombi_year_spinner);
@@ -248,6 +251,9 @@ public class TrombiFragment extends Fragment {
                     Type listType = new TypeToken<List<Trombi>>() {
                     }.getType();
                     trombi = new Gson().fromJson(json.get("items"), listType);
+                    if (getActivity() == null) {
+                        return;
+                    }
                     adapter = new TrombiAdapter(getActivity(), trombi);
                     gridView.setAdapter(adapter);
                     progressDialog.dismiss();

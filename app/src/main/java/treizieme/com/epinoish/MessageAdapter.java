@@ -65,7 +65,6 @@ public class MessageAdapter extends BaseAdapter {
         messageTitle.setText(Html.fromHtml(_messageList.get(position).getTitle()));
         messageContent.setText(Html.fromHtml(_messageList.get(position).getContent()));
         messageDate.setText(_messageList.get(position).getDate());
-        // TODO: Get picture
         if (_messageList.get(position).getUser().get("picture") != null) {
             new DownloadImageTask((ImageView) layoutItem.findViewById(R.id.message_user))
                     .execute(_messageList.get(position).getUser().get("picture"));

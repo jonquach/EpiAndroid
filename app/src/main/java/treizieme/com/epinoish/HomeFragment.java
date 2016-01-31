@@ -48,6 +48,11 @@ public class HomeFragment extends Fragment {
         progressDialog.setMessage("Loading...");
         progressDialog.show();
         msgList = (ListView) view.findViewById(R.id.message_list);
+        if (getActivity() == null) {
+            progressDialog.dismiss();
+            return view;
+        }
+
         adapter = new MessageAdapter(getActivity(), msg);
 
         if (UserData.getInstance().getToken() != null) {
@@ -90,6 +95,9 @@ public class HomeFragment extends Fragment {
                     Type listType = new TypeToken<List<Message>>() {
                     }.getType();
                     msg = new Gson().fromJson(json, listType);
+                    if (getActivity() == null) {
+                        return;
+                    }
                     adapter = new MessageAdapter(getActivity(), msg);
                     msgList.setAdapter(adapter);
                     progressDialog.dismiss();

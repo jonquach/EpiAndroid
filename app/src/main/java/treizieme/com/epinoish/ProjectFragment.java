@@ -115,6 +115,9 @@ public class ProjectFragment extends Fragment {
                     }.getType();
                     projects = new Gson().fromJson(json, listType);
                     progressDialog.dismiss();
+                    if (getActivity() == null) {
+                        return;
+                    }
                     adapter = new ProjectAdapter(getActivity(), projects);
                     listProjects.setAdapter(adapter);
                     if (registered == 1) {

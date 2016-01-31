@@ -65,6 +65,10 @@ public class ModuleFragment extends Fragment {
                         clicked.getCodeinstance());
             }
         });
+        if (getActivity() == null) {
+            progressDialog.dismiss();
+            return view;
+        }
         adapter = new ModuleAdapter(getActivity(), modules);
         spinner = (Spinner) view.findViewById(R.id.module_semester_spinner);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
@@ -118,6 +122,9 @@ public class ModuleFragment extends Fragment {
                     Type listType = new TypeToken<List<Module>>() {
                     }.getType();
                     modules = new Gson().fromJson(json.get("modules"), listType);
+                    if (getActivity() == null) {
+                        return;
+                    }
                     adapter = new ModuleAdapter(getActivity(), modules);
                     listModules.setAdapter(adapter);
                     progressDialog.dismiss();

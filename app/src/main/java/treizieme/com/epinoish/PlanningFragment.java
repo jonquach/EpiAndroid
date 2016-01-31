@@ -79,6 +79,10 @@ public class PlanningFragment extends Fragment {
             }
         });
         searchBar = (EditText) view.findViewById(R.id.planning_search);
+        if (getActivity() == null) {
+            progressDialog.dismiss();
+            return view;
+        }
         adapter = new PlanningAdapter(getActivity(), events);
         spinner = (Spinner) view.findViewById(R.id.planning_semester_spinner);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
@@ -147,6 +151,9 @@ public class PlanningFragment extends Fragment {
                     Type listType = new TypeToken<List<Planning>>() {
                     }.getType();
                     events = new Gson().fromJson(json, listType);
+                    if (getActivity() == null) {
+                        return;
+                    }
                     adapter = new PlanningAdapter(getActivity(), events);
                     listEvents.setAdapter(adapter);
                     progressDialog.dismiss();
