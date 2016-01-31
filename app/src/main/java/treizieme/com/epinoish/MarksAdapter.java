@@ -82,7 +82,7 @@ public class MarksAdapter extends BaseAdapter implements Filterable{
 
                 if (constraint == null || constraint.length() == 0) {
                     results.values = mListMarks;
-                    results.values = mListMarks.size();
+                    results.count = mListMarks.size();
                 } else {
                     ArrayList<Marks> filterResultsData = new ArrayList<>();
                     for (Marks item : mListMarks) {

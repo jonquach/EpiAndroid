@@ -23,6 +23,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -105,6 +106,7 @@ public class MarksFragement extends Fragment {
                     Type listType = new TypeToken<List<Marks>>() {
                     }.getType();
                     marks = new Gson().fromJson(json.get("notes"), listType);
+                    Collections.reverse(marks);
                     adapter = new MarksAdapter(getActivity(), marks);
                     listMarks.setAdapter(adapter);
                     progressDialog.dismiss();
