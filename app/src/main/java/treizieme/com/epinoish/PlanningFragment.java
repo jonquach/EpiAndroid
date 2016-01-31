@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
@@ -141,41 +143,46 @@ public class PlanningFragment extends Fragment {
             super.onPostExecute(json);
 
             if (json != null) {
-                Type listType = new TypeToken<List<Planning>>() {
-                }.getType();
-                events = new Gson().fromJson(json, listType);
-                adapter = new PlanningAdapter(getActivity(), events);
-                listEvents.setAdapter(adapter);
-                progressDialog.dismiss();
-                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        adapter.setFilteredItem(false);
-                        adapter.getFilter().filter(spinner.getSelectedItem().toString());
-                    }
+                try {
+                    Type listType = new TypeToken<List<Planning>>() {
+                    }.getType();
+                    events = new Gson().fromJson(json, listType);
+                    adapter = new PlanningAdapter(getActivity(), events);
+                    listEvents.setAdapter(adapter);
+                    progressDialog.dismiss();
+                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            adapter.setFilteredItem(false);
+                            adapter.getFilter().filter(spinner.getSelectedItem().toString());
+                        }
 
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
 
-                    }
-                });
-                searchBar.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        }
+                    });
+                    searchBar.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                    }
+                        }
 
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        adapter.setFilteredItem(true);
-                        adapter.getFilter().filter(s.toString());
-                    }
-                });
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            adapter.setFilteredItem(true);
+                            adapter.getFilter().filter(s.toString());
+                        }
+                    });
+                } catch (JsonParseException e) {
+                    Log.e("Error", e.getMessage());
+                    e.printStackTrace();
+                }
             }
         }
     }

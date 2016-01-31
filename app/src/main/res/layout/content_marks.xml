@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     tools:context="treizieme.com.epinoish.MarksFragment">
 
-
     <ListView
         android:id="@+id/list_marks"
         android:layout_width="match_parent"

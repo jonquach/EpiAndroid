@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 
 import java.io.IOException;
 
@@ -99,12 +101,17 @@ public class SingleProjectFragment extends Fragment {
             super.onPostExecute(json);
 
             if (json != null) {
-                JsonObject gObj = new Gson().fromJson(json, JsonObject.class);
-                progressDialog.dismiss();
-                singleProjectTitle.setText(gObj.get("project_title").toString()
-                        .replace("\\n", "\n").replace("\"", ""));
-                singleProjectDescription.setText(gObj.get("description").toString()
-                        .replace("\\n", "\n").replace("\"", ""));
+                try {
+                    JsonObject gObj = new Gson().fromJson(json, JsonObject.class);
+                    progressDialog.dismiss();
+                    singleProjectTitle.setText(gObj.get("project_title").toString()
+                            .replace("\\n", "\n").replace("\"", ""));
+                    singleProjectDescription.setText(gObj.get("description").toString()
+                            .replace("\\n", "\n").replace("\"", ""));
+                } catch (JsonParseException e) {
+                    Log.e("Error", e.getMessage());
+                    e.printStackTrace();
+                }
             }
         }
     }

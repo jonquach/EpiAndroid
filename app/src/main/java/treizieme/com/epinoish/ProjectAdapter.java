@@ -1,6 +1,7 @@
 package treizieme.com.epinoish;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +58,9 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
         TextView project_begin_acti = (TextView)layoutItem.findViewById(R.id.project_begin_acti);
 
         project_acti_title.setText(mListProjectFiltered.get(position).getActi_title());
+        project_end_acti.setTextColor(ContextCompat.getColor(mContext, R.color.red));
         project_end_acti.setText(mListProjectFiltered.get(position).getEnd_acti());
+        project_begin_acti.setTextColor(ContextCompat.getColor(mContext, R.color.green));
         project_begin_acti.setText(mListProjectFiltered.get(position).getBegin_acti());
         return layoutItem;
     }

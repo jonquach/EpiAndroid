@@ -207,7 +207,7 @@ public class LoginFragment extends Fragment {
 
     private boolean loginValidate() {
 
-        log = login.getText().toString();
+        log = login.getText().toString().toLowerCase();
         pass = password.getText().toString();
         boolean isValid = true;
 

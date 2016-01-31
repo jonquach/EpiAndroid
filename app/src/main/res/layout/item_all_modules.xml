@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
-        android:textAppearance="?android:textAppearanceLarge"
         android:id="@+id/all_modules_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -15,16 +17,16 @@
         android:orientation="horizontal">
 
         <TextView
-            android:textAppearance="?android:textAppearanceMedium"
-            android:text="@string/all_modules_registered"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/all_modules_registered"
+            android:textSize="14sp" />
 
         <TextView
-            android:textAppearance="?android:textAppearanceMedium"
             android:id="@+id/all_modules_registered"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="14sp" />
 
     </LinearLayout>
 
@@ -34,16 +36,16 @@
         android:orientation="horizontal">
 
         <TextView
-            android:textAppearance="?android:textAppearanceMedium"
-            android:text="@string/all_modules_status"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/all_modules_status"
+            android:textSize="14sp" />
 
         <TextView
-            android:textAppearance="?android:textAppearanceMedium"
             android:id="@+id/all_modules_status"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="14sp" />
 
     </LinearLayout>
 

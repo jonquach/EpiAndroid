@@ -4,12 +4,14 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
@@ -84,11 +86,17 @@ public class HomeFragment extends Fragment {
             super.onPostExecute(json);
 
             if (json != null) {
-                Type listType = new TypeToken<List<Message>>() {}.getType();
-                msg = new Gson().fromJson(json, listType);
-                adapter = new MessageAdapter(getActivity(), msg);
-                msgList.setAdapter(adapter);
-                progressDialog.dismiss();
+                try {
+                    Type listType = new TypeToken<List<Message>>() {
+                    }.getType();
+                    msg = new Gson().fromJson(json, listType);
+                    adapter = new MessageAdapter(getActivity(), msg);
+                    msgList.setAdapter(adapter);
+                    progressDialog.dismiss();
+                } catch (JsonParseException e) {
+                    Log.e("Error", e.getMessage());
+                    e.printStackTrace();
+                }
             }
         }
     }
