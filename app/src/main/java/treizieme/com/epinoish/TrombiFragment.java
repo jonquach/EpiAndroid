@@ -171,7 +171,7 @@ public class TrombiFragment extends Fragment {
                     String infos = user.getFullInfos();
                     userText.setText(infos);
 
-                    if (!user.getPicture().contains("null.")) {
+                    if (user.getPicture() != null && !user.getPicture().contains("null.")) {
                         new DownloadImageTask((ImageView) view.findViewById(R.id.trombi_user_img))
                                 .execute(user.getPicture());
                     }

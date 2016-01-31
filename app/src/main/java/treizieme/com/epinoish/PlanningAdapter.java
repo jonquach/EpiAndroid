@@ -54,12 +54,12 @@ public class PlanningAdapter extends BaseAdapter implements Filterable {
             layoutItem = (LinearLayout) convertView;
         }
 
-        TextView planning_title = (TextView)layoutItem.findViewById(R.id.planning_title);
-        TextView planning_date = (TextView)layoutItem.findViewById(R.id.planning_date);
-        TextView planning_start = (TextView)layoutItem.findViewById(R.id.planning_start);
-        TextView planning_end = (TextView)layoutItem.findViewById(R.id.planning_end);
-        TextView planning_room = (TextView)layoutItem.findViewById(R.id.planning_room);
-        TextView planning_token = (TextView)layoutItem.findViewById(R.id.planning_token);
+        TextView planning_title = (TextView) layoutItem.findViewById(R.id.planning_title);
+        TextView planning_date = (TextView) layoutItem.findViewById(R.id.planning_date);
+        TextView planning_start = (TextView) layoutItem.findViewById(R.id.planning_start);
+        TextView planning_end = (TextView) layoutItem.findViewById(R.id.planning_end);
+        TextView planning_room = (TextView) layoutItem.findViewById(R.id.planning_room);
+        TextView planning_token = (TextView) layoutItem.findViewById(R.id.planning_token);
 
         Planning current = mListPlanningFiltered.get(position);
 
