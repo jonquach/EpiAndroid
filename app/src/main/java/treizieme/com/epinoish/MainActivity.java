@@ -231,4 +231,11 @@ public class MainActivity extends AppCompatActivity
         ft.addToBackStack(null);
         ft.commit();
     }
+
+    public void loadFragment(Fragment toLoad) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, toLoad);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
 }
