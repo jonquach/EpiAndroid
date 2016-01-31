@@ -349,4 +349,28 @@ public class User {
     public void setNsstat(Map<String, Double> nsstat) {
         this.nsstat = nsstat;
     }
+
+    public String getFullInfos() {
+        String infos = this.getFullName() + "\n" + this.getInternal_email() + "\n";
+
+        if (this.getGpa() != null)
+            infos += "GPA: " + this.getGpa().get(0).get("gpa") + "\n";
+
+        if (this.getCredits() != null)
+            infos += "Credits: " + this.getCredits().toString() + "\n";
+
+        if (this.getSpice() != null)
+            infos += "Spices: " + this.getSpice().get("available_spice") + "\n";
+
+        if (this.getNsstat() != null) {
+            infos += "Log time: " + this.getNsstat().get("active").toString() + "h" + "\n";
+        } else {
+            infos += "Log time: 0h\n";
+        }
+
+        if (this.getStudentyear() != null)
+            infos += "Tek" + this.getStudentyear().toString();
+
+        return infos;
+    }
 }

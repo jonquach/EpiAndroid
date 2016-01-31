@@ -2,7 +2,6 @@ package treizieme.com.epinoish;
 
 
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -60,7 +59,13 @@ public class SingleModuleFragment extends Fragment {
         scolaryear = bundle.getString("scolaryear");
         codeinstance = bundle.getString("codeinstance");
         codemodule = bundle.getString("codemodule");
-        new Task().execute();
+
+        if (UserData.getInstance().getToken() != null) {
+            new Task().execute();
+        } else {
+            progressDialog.dismiss();
+        }
+
         return view;
     }
 
@@ -68,8 +73,7 @@ public class SingleModuleFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... params) {
-            SharedPreferences prefs = getActivity().getPreferences(0);
-            String token = prefs.getString("token", "empty");
+            String token = UserData.getInstance().getToken();
 
             Request request = new Request.Builder()
                     .url("http://epitech-api.herokuapp.com/module?token=" + token
@@ -81,7 +85,11 @@ public class SingleModuleFragment extends Fragment {
 
             try {
                 Response response = client.newCall(request).execute();
-                return response.body().string();
+
+                if (response.code() == 200) {
+                    return response.body().string();
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -91,14 +99,17 @@ public class SingleModuleFragment extends Fragment {
         @Override
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
-            JsonObject gObj = new Gson().fromJson(json, JsonObject.class);
-            progressDialog.dismiss();
-            singleModuleTitle.setText(gObj.get("title").toString()
-                    .replace("\\n", "\n").replace("\"", ""));
-            singleModuleDescription.setText(gObj.get("description").toString()
-                    .replace("\\n", "\n").replace("\"", ""));
-            singleModuleGrade.setText(gObj.get("student_grade").toString().replace("\\n", "\n").replace("\"", ""));
-            singleModuleCredits.setText(gObj.get("credits").toString().replace("\\n", "\n").replace("\"", ""));
+
+            if (json != null) {
+                JsonObject gObj = new Gson().fromJson(json, JsonObject.class);
+                progressDialog.dismiss();
+                singleModuleTitle.setText(gObj.get("title").toString()
+                        .replace("\\n", "\n").replace("\"", ""));
+                singleModuleDescription.setText(gObj.get("description").toString()
+                        .replace("\\n", "\n").replace("\"", ""));
+                singleModuleGrade.setText(gObj.get("student_grade").toString().replace("\\n", "\n").replace("\"", ""));
+                singleModuleCredits.setText(gObj.get("credits").toString().replace("\\n", "\n").replace("\"", ""));
+            }
         }
     }
 }

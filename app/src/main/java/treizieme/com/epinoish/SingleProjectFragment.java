@@ -2,7 +2,6 @@ package treizieme.com.epinoish;
 
 
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,11 +13,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -60,7 +56,13 @@ public class SingleProjectFragment extends Fragment {
         codeinstance = bundle.getString("codeinstance");
         codemodule = bundle.getString("codemodule");
         codeacti = bundle.getString("codeacti");
-        new Task().execute();
+
+        if (UserData.getInstance().getToken() != null) {
+            new Task().execute();
+        } else {
+            progressDialog.dismiss();
+        }
+
         return view;
     }
 
@@ -68,8 +70,7 @@ public class SingleProjectFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... params) {
-            SharedPreferences prefs = getActivity().getPreferences(0);
-            String token = prefs.getString("token", "empty");
+            String token = UserData.getInstance().getToken();
 
             Request request = new Request.Builder()
                     .url("http://epitech-api.herokuapp.com/project?token=" + token
@@ -82,7 +83,11 @@ public class SingleProjectFragment extends Fragment {
 
             try {
                 Response response = client.newCall(request).execute();
-                return response.body().string();
+
+                if (response.code() == 200) {
+                    return response.body().string();
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -92,12 +97,15 @@ public class SingleProjectFragment extends Fragment {
         @Override
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
-            JsonObject gObj = new Gson().fromJson(json, JsonObject.class);
-            progressDialog.dismiss();
-            singleProjectTitle.setText(gObj.get("project_title").toString()
-                    .replace("\\n", "\n").replace("\"", ""));
-            singleProjectDescription.setText(gObj.get("description").toString()
-                    .replace("\\n", "\n").replace("\"", ""));
+
+            if (json != null) {
+                JsonObject gObj = new Gson().fromJson(json, JsonObject.class);
+                progressDialog.dismiss();
+                singleProjectTitle.setText(gObj.get("project_title").toString()
+                        .replace("\\n", "\n").replace("\"", ""));
+                singleProjectDescription.setText(gObj.get("description").toString()
+                        .replace("\\n", "\n").replace("\"", ""));
+            }
         }
     }
 }

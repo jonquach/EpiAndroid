@@ -31,7 +31,6 @@
             android:layout_alignTop="@+id/user_picture"
             android:layout_toRightOf="@+id/user_picture"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:text="name"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="13sp" />
 
@@ -42,7 +41,6 @@
             android:layout_alignLeft="@+id/user_name"
             android:layout_below="@+id/user_name"
             android:layout_toRightOf="@+id/user_picture"
-            android:text="fdsfds"
             android:textSize="13sp" />
 
     </RelativeLayout>

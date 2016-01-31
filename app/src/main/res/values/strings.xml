@@ -7,8 +7,12 @@
     <string name="login">Login</string>
     <string name="modules">My Modules</string>
     <string name="projects">My Projects</string>
+    <string name="logout">Logout</string>
+    <string name="push_to_logout">Press button to logout</string>
     <string name="planning">Planning</string>
     <string name="marks">Marks</string>
+    <string name="trombi">Trombi</string>
+    <string name="search">Search</string>
     <string name="title_activity_main_page">MainPage</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_login">LoginActivity</string>
@@ -37,6 +41,30 @@
         <item>8</item>
         <item>9</item>
         <item>10</item>
+    </string-array>
+
+    <string-array name="trombi_location">
+        <item>Paris/PAR</item>
+        <item>Lyon/LYN</item>
+        <item>Marseille/MAR</item>
+        <item>Bordeaux/BDX</item>
+        <item>Lille/LIL</item>
+        <item>Montpellier/MPL</item>
+        <item>Nancy/NCY</item>
+        <item>Nantes/NAN</item>
+        <item>Nices/NCE</item>
+        <item>Rennes/REN</item>
+        <item>Strasbourg/STG</item>
+        <item>Toulouse/TLS</item>
+    </string-array>
+
+    <string-array name="trombi_year">
+        <item>2015</item>
+        <item>2014</item>
+        <item>2013</item>
+        <item>2012</item>
+        <item>2011</item>
+        <item>2010</item>
     </string-array>
 
     <string name="project_hyphen"> - </string>

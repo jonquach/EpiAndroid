@@ -50,7 +50,9 @@ public class DrawerInfos extends AppCompatActivity {
 
             try {
                 Response response = client.newCall(request).execute();
-                return response.body().string();
+                if (response.code() == 200) {
+                    return response.body().string();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -61,29 +63,22 @@ public class DrawerInfos extends AppCompatActivity {
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
 
-            Type listType = new TypeToken<User>() {}.getType();
-            User user = new Gson().fromJson(json, listType);
+            if (json != null) {
 
-            TextView username = (TextView) drawer.findViewById(R.id.user_name);
-            TextView userInfo = (TextView) drawer.findViewById(R.id.user_info);
+                Type listType = new TypeToken<User>() {
+                }.getType();
+                User user = new Gson().fromJson(json, listType);
 
-            username.setText(user.getFullName());
-            String infos = user.getInternal_email() + "\n" +
-                    "GPA: " + user.getGpa().get(0).get("gpa") + "\n" +
-                    "Credits: " + user.getCredits().toString() + "\n" +
-                    "Spices: " + user.getSpice().get("available_spice") + "\n";
+                TextView userInfo = (TextView) drawer.findViewById(R.id.user_info);
 
-            if (user.getNsstat() != null) {
-                infos += "Log time: " + user.getNsstat().get("active").toString() + "h" + "\n";
-            } else {
-                infos += "Log time: 0h\n";
-            }
+                String infos = user.getFullInfos();
 
-            userInfo.setText(infos);
+                userInfo.setText(infos);
 
-            if (!user.getPicture().contains("null.")) {
-                new DownloadImageTask((ImageView) drawer.findViewById(R.id.user_picture))
-                        .execute(user.getPicture());
+                if (!user.getPicture().contains("null.")) {
+                    new DownloadImageTask((ImageView) drawer.findViewById(R.id.user_picture))
+                            .execute(user.getPicture());
+                }
             }
         }
     }

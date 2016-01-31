@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
@@ -50,13 +51,27 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        if (UserData.getInstance().getToken() != null) {
+            View view = inflater.inflate(R.layout.fragment_logout, container, false);
+
+            Button btnLogout = (Button) view.findViewById(R.id.btn_logout);
+
+            btnLogout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    logout();
+                }
+            });
+
+            return view;
+        }
+
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         ((MainActivity) getActivity()).setToolbarTitle("Login");
 
         login = (EditText) view.findViewById(R.id.input_login);
         password = (EditText) view.findViewById(R.id.input_password);
 
-        // Login btn listener
         btnLogin = (Button) view.findViewById(R.id.btn_login);
 
         SharedPreferences sharedPref = getActivity().getPreferences(0);
@@ -76,6 +91,26 @@ public class LoginFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void logout() {
+        SharedPreferences sharedPref = getActivity().getPreferences(0);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.remove("token");
+        editor.apply();
+        UserData.getInstance().setToken(null);
+
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
+
+        Fragment frag = new LoginFragment();
+
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, frag);
+        ft.commit();
     }
 
     private void login() {
