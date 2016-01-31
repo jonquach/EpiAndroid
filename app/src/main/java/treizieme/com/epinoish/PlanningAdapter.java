@@ -66,7 +66,7 @@ public class PlanningAdapter extends BaseAdapter implements Filterable {
         if (current.getEvent_registered() != null
                 && current.getEvent_registered().equals("registered")
                 && !current.getModule_registered().equals(false)
-        //        && mListPlanningFiltered.get(position).getAllow_token()
+                && mListPlanningFiltered.get(position).getAllow_token()
                 ) {
             planning_token.setVisibility(View.VISIBLE);
         }

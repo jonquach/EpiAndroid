@@ -70,7 +70,7 @@ public class PlanningFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Planning clicked = (Planning) listEvents.getItemAtPosition(position);
                 if (clicked.getEvent_registered() != null && clicked.getEvent_registered().equals("registered")
-//                        && clicked.getAllow_token()
+                        && clicked.getAllow_token()
                         )
                 ((MainActivity) getActivity()).loadTokenFragment(clicked.getScolaryear(),
                         clicked.getCodemodule(),
