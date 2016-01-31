@@ -3,32 +3,40 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_login_frag"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/login" />
-        <item
             android:id="@+id/nav_home_frag"
+            android:icon="@drawable/ic_menu_home"
             android:title="@string/home" />
         <item
+            android:id="@+id/nav_login_frag"
+            android:icon="@drawable/ic_menu_log"
+            android:title="@string/login" />
+        <item
             android:id="@+id/nav_modules_frag"
+            android:icon="@drawable/ic_menu_modules"
             android:title="@string/modules" />
         <item
             android:id="@+id/nav_all_modules_frag"
+            android:icon="@drawable/ic_menu_modules"
             android:title="@string/all_modules" />
         <item
             android:id="@+id/nav_projects_frag"
+            android:icon="@drawable/ic_menu_project"
             android:title="@string/projects" />
         <item
             android:id="@+id/nav_all_projects_frag"
+            android:icon="@drawable/ic_menu_project"
             android:title="@string/all_projects" />
         <item
             android:id="@+id/nav_planning_frag"
+            android:icon="@drawable/ic_menu_planning"
             android:title="@string/planning" />
         <item
             android:id="@+id/nav_marks_frag"
+            android:icon="@drawable/ic_menu_marks"
             android:title="@string/marks" />
         <item
             android:id="@+id/nav_trombi_frag"
+            android:icon="@drawable/ic_menu_trombi"
             android:title="@string/trombi" />
     </group>
 
